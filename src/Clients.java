@@ -1,17 +1,8 @@
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.Map;
 
 public class Clients {
-
-    Map<String, Object> properties;
-
-    Object getParameter(String key){
-        return properties.get(key);
-    }
-    void addParameter(String key, Object value){
-        properties.put(key, value);
-    }
-
 
     public void mostrarTots(){
         try{
@@ -96,18 +87,38 @@ public class Clients {
         }
 
     }
-    public void modificarCliente(String tel, String dni, String nomCognom){
+    public void modificarCliente(Map<String,String> array, String dni){
         try{
+            String query = "UPDATE Clients SET ";
             String miDriver="com.mysql.cj.jdbc.Driver";
             String miUrl = "jdbc:mysql://localhost/carsRental";
             Class.forName(miDriver);
             Connection conexion = DriverManager.getConnection(miUrl, "root", "admin");
-            String query = "UPDATE Clients SET telefon = ?, nomCognom = ? WHERE dni = ?;";
+
+            /*for(String a : array){
+                String last = array.get(array.size() - 1);
+                if (array.size() > 1 && a != last ){
+                    query = query + a + " = ?,";
+                }else if (a == last){
+                    query = query + a + " = ? WHERE dni = ?;";
+                }else{
+                    query = query + a + " = ? WHERE dni = ?;";
+                }
+            }*/
+            //System.out.println(query);
+            //String query = "UPDATE Clients SET telefon = ?, nomCognom = ? WHERE dni = ?;";
             PreparedStatement preparedStmt = conexion.prepareStatement(query);
-            preparedStmt.setString(1, tel);
+            for(int i = 0; i< array.size(); i++){
+                if(array.get(i)=="edat" || array.get(i)=="punts"){
+                    //"hay que parsear el valor"
+                }
+                preparedStmt.setString(i+1, "aqui va el valor");
+                preparedStmt.executeUpdate();
+            }
+            /*preparedStmt.setString(1, tel);
             preparedStmt.setString(2, nomCognom);
             preparedStmt.setString(3, dni);
-            preparedStmt.executeUpdate();
+            preparedStmt.executeUpdate();*/
         }catch (Exception e){
             System.err.println("Ha habido una exception!");
             System.err.println(e.getMessage());

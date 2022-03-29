@@ -1,3 +1,7 @@
+import java.sql.Array;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
 
 public class main {
@@ -49,8 +53,28 @@ public class main {
                     client.inserirClient(dniInsertar,nom, edat, tel, adreca, ciutat, pais, email, permis, punts);
                     break;
                 case 4:
-                    System.out.println("Actualizar...");
-                    client.modificarCliente("55555","22222","Pepito");
+                    String [] columnas = new String[]{"nomCognom","dni","edat","telefon","adreca","ciutat","pais","email","permisConduccio","punts"};
+                    ArrayList<String> tmpArray = new ArrayList<String>();
+                    Map<String,String> modificarColumnas = new HashMap<String,String>();
+                    String dniModificar;
+                    for(String columna :columnas){
+                        String clave;
+                        String valor;
+                        System.out.print("Vols modificar "+columna+"? (s/n) ");
+                        clave=sn.next();
+                        if (clave.equalsIgnoreCase("s")){
+                            //tmpArray.add(columna);
+                            System.out.print("Quin nou valor per "+columna+"? ");
+                            valor=sn.next();
+                            modificarColumnas.put(columna, valor);
+                        }
+                        System.out.println(modificarColumnas);
+                    }
+                    //System.out.print("Posa el dni del client que vols modificar: ");
+                    //dniModificar=sn.next();
+                    //client.modificarCliente(modificarColumnas,dniModificar);
+                    //System.out.println("Actualizar...");
+                    //client.modificarCliente("55555","22222","Pepito");
                     break;
                 case 5:
                     String dniEsborrar;
