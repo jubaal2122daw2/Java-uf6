@@ -24,35 +24,46 @@ public class main {
                     client.mostrarTots();
                     break;
                 case 2:
-                    System.out.println("Mostrando por dni...");
-                    client.mostrarClient("123456");
+                    String dni;
+                    System.out.print("Introdueix el dni del client que vols buscar: ");
+                    dni=sn.next();
+                    System.out.println("Mostrar client pel dni...");
+                    client.mostrarClient(dni);
+
                     break;
                 case 3:
-                    System.out.println("Inseriendo el cliente");
-                    client.inserirClient("22222",
-                            "HOLA",
-                            22,
-                            "123345",
-                            "holahola",
-                            "holagola",
-                            "españa",
-                            "@@@@",
-                            "A2",
-                            10);
+                    String dniInsertar,nom, tel, adreca,ciutat,pais,email,permis;
+                    int edat,punts;
+                    System.out.println("Introdueix les dades del usuario a mostrar ");
+                    System.out.print("DNI: "); dniInsertar=sn.next();
+                    System.out.print("Nom: "); nom=sn.next();
+                    System.out.print("Edat: "); edat=sn.nextInt();
+                    System.out.print("Telèfon: "); tel=sn.next();
+                    System.out.print("Adreça: "); adreca=sn.next();
+                    System.out.print("Ciutat: "); ciutat=sn.next();
+                    System.out.print("Pais: "); pais=sn.next();
+                    System.out.print("Email: "); email=sn.next();
+                    System.out.print("Permis: "); permis=sn.next();
+                    System.out.print("Punts: "); punts=sn.nextInt();
+                    System.out.println("Inserint el client.....");
+                    client.inserirClient(dniInsertar,nom, edat, tel, adreca, ciutat, pais, email, permis, punts);
                     break;
                 case 4:
                     System.out.println("Actualizar...");
                     client.modificarCliente("55555","22222","Pepito");
                     break;
                 case 5:
-                    System.out.println("Eliminar por dni...");
-                    client.eliminarClient("22222");
+                    String dniEsborrar;
+                    System.out.print("Introdueix el dni del client que vols esborrar: ");
+                    dniEsborrar=sn.next();
+                    System.out.println("Esborrant client...");
+                    client.eliminarClient(dniEsborrar);
                     break;
                 case 6:
                     salir=true;
                     break;
                 default:
-                    System.out.println("Solo números entre 1 y 6");
+                    System.out.println("Únicament nombres del 1 al 6");
             }
         }
     }

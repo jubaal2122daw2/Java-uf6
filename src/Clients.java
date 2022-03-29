@@ -1,6 +1,17 @@
 import java.sql.*;
+import java.util.Map;
 
 public class Clients {
+
+    Map<String, Object> properties;
+
+    Object getParameter(String key){
+        return properties.get(key);
+    }
+    void addParameter(String key, Object value){
+        properties.put(key, value);
+    }
+
 
     public void mostrarTots(){
         try{
