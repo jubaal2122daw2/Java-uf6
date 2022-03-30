@@ -34,11 +34,13 @@ public class main {
                     break;
                 case 3:
                     String dniInsertar,nom, tel, adreca,ciutat,pais,email,permis;
-                    int edat,punts;
-                    System.out.println("Introdueix les dades del usuario a mostrar ");
+                    int edat, punts;
+                    System.out.println("Introdueix les dades del client a crear ");
+                    sn.nextLine(); //refresca el scanner
                     System.out.print("DNI: "); dniInsertar=sn.nextLine();
                     System.out.print("Nom y Cognom: "); nom=sn.nextLine();
                     System.out.print("Edat: "); edat=sn.nextInt();
+                    sn.nextLine();
                     System.out.print("Telèfon: "); tel=sn.nextLine();
                     System.out.print("Adreça: "); adreca=sn.nextLine();
                     System.out.print("Ciutat: "); ciutat=sn.nextLine();
@@ -46,6 +48,7 @@ public class main {
                     System.out.print("Email: "); email=sn.nextLine();
                     System.out.print("Permis: "); permis=sn.nextLine();
                     System.out.print("Punts: "); punts=sn.nextInt();
+                    sn.nextLine();
                     System.out.println("Inserint el client.....");
                     client.inserirClient(dniInsertar,nom, edat, tel, adreca, ciutat, pais, email, permis, punts);
                     break;
@@ -53,23 +56,23 @@ public class main {
                     String [] columnas = new String[]{"nomCognom","dni","edat","telefon","adreca","ciutat","pais","email","permisConduccio","punts"};
                     Map<String,String> modificarColumnas = new TreeMap<>();
                     String dniModificar;
+                    sn.nextLine(); //refresca scanner
                     for(String columna :columnas){
                         String clave;
                         String valor;
                         System.out.print("Vols modificar "+columna+"? (s/n) ");
-                        clave=sn.next();
+                        clave=sn.nextLine();
+                        //sn.nextLine();
                         if (clave.equalsIgnoreCase("s")){
-                            //tmpArray.add(columna);
                             System.out.print("Quin nou valor per "+columna+"? ");
-                            valor=sn.next();
+                            valor=sn.nextLine();
                             modificarColumnas.put(columna, valor);
                         }
                     }
                     System.out.print("Posa el dni del client que vols modificar: ");
                     dniModificar=sn.next();
                     client.modificarCliente(modificarColumnas,dniModificar);
-                    //System.out.println("Actualizar...");
-                    //client.modificarCliente("55555","22222","Pepito");
+                    System.out.println("Actualizar...");
                     break;
                 case 5:
                     String dniEsborrar;
