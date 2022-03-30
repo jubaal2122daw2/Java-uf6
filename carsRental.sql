@@ -3,6 +3,8 @@ INSERT INTO clients values("46465746W", "Judith Barrajon", 27, "607652294","call
 UPDATE clients set permisConduccio = 'A2' where nomCognom = "Judith Barrajon";*/
 UPDATE Clients SET nomCognom = "pepe" WHERE dni = "1234";
 select * from clients;
+select * from cotxes;
+select * from mecanics;
 SELECT * FROM clients WHERE UPPER(dni) LIKE '46465746w';
 /*----------------------------------------------*/
 CREATE DATABASE carsRental;

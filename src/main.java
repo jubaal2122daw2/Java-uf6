@@ -4,6 +4,7 @@ public class main {
     public static void main(String[] args) {
         Clients client = new Clients();
         Cotxes cotxe = new Cotxes();
+        Mecanics mecanic = new Mecanics();
         Scanner sn = new Scanner(System.in);
         boolean salir = false;
         int opcion;
@@ -12,6 +13,7 @@ public class main {
             System.out.println("CARS RENTAL");
             System.out.println("1.Gestionar Clients");
             System.out.println("2.Gestionar Cotxes");
+            System.out.println("3.Gestionar Mecànics");
             System.out.println("6.Salir");
             System.out.print("Escriu una de les opcions --> ");
             opcion=sn.nextInt();
@@ -21,6 +23,9 @@ public class main {
                     break;
                 case 2:
                     menuCotxes(cotxe,sn);
+                    break;
+                case 3:
+                    menuMecanics(mecanic, sn);
                     break;
                 case 6:
                     salir=true;
@@ -208,6 +213,105 @@ public class main {
             }
 
         }
+    }
+
+    public static void menuMecanics(Mecanics mecanic, Scanner sn) {
+        sn.nextLine(); //refresca scanner
+        boolean salir = false;
+        int opcionMenu;
+        while(!salir){
+            System.out.println("Benvingut a la secció de Mecànics, què vol fer?");
+            System.out.println("1.Mostrar tots els mecànics");
+            System.out.println("2.Mostrar per dni");
+            System.out.println("3.Inserir");
+            System.out.println("4.Actualitzar");
+            System.out.println("5.Esborrar per dni");
+            System.out.println("6.Tornar al menú principal");
+            System.out.print("Escriu una de les opcions --> ");
+
+            opcionMenu=sn.nextInt();
+            switch (opcionMenu){
+                case 1:
+                    System.out.print("-------------------MOSTRAR DADES-------------------\n");
+                    System.out.println("Mostrant totes les dades...");
+                    mecanic.mostrarTots();
+                    break;
+                case 2:
+                    System.out.print("-------------------MOSTRAR PER DNI-------------------\n");
+                    String dni;
+                    System.out.print("Introdueix el dni del mecanic que vols buscar: ");
+                    dni=sn.next();
+                    System.out.println("Mostrar mecanic pel dni...");
+                    mecanic.mostrarMecanics(dni);
+                    break;
+                case 3:
+                    System.out.print("-------------------INSERIR-------------------\n");
+                    String dniInsertar,nomCognomM,telM,adrecaM,ciutatM,paisM,emailM,permisConduccioM, titulacio;
+                    int edatM, puntsM, seguretatSocial, anysEmp;
+                    double salari;
+                    System.out.println("Introdueix les dades del mecànic a crear ");
+                    sn.nextLine(); //refresca el scanner
+                    System.out.print("DNI: "); dniInsertar=sn.nextLine();
+                    System.out.print("Nom y Cognom: "); nomCognomM=sn.nextLine();
+                    System.out.print("Edat: "); edatM=sn.nextInt();
+                    sn.nextLine();
+                    System.out.print("Telèfon: "); telM=sn.nextLine();
+                    System.out.print("Adreça: "); adrecaM=sn.nextLine();
+                    System.out.print("Ciutat: "); ciutatM=sn.nextLine();
+                    System.out.print("Pais: "); paisM=sn.nextLine();
+                    System.out.print("Email: "); emailM=sn.nextLine();
+                    System.out.print("Permis: "); permisConduccioM=sn.nextLine();
+                    System.out.print("Punts: "); puntsM=sn.nextInt();
+                    sn.nextLine();
+                    System.out.print("Salari: "); salari=sn.nextDouble();
+                    sn.nextLine();
+                    System.out.print("Nº SeguretatSocial: "); seguretatSocial=sn.nextInt();
+                    sn.nextLine();
+                    System.out.print("Titulació: "); titulacio=sn.nextLine();
+                    System.out.print("Anys Empresa: "); anysEmp=sn.nextInt();
+                    sn.nextLine();
+                    System.out.println("Inserint el mecànic.....");
+                    mecanic.inserirMecanic(dniInsertar,nomCognomM, edatM, telM, adrecaM, ciutatM, paisM, emailM, permisConduccioM, puntsM, salari, seguretatSocial, titulacio, anysEmp);
+                    break;
+                case 4:
+                    System.out.print("-------------------ACTUALITZAR-------------------\n");
+                    String [] columnas = new String[]{"nomCognomM","dniMecanic","edatM","telM","adrecaM","ciutatM","paisM","emailM","permisConduccioM","puntsM", "salari", "seguretatSocial","titulacio", "anysEmp"};
+                    Map<String,String> modificarColumnas = new TreeMap<>();
+                    String dniModificar;
+                    sn.nextLine(); //refresca scanner
+                    for(String columna :columnas){
+                        String clave;
+                        String valor;
+                        System.out.print("Vols modificar "+columna+"? (s/n) ");
+                        clave=sn.nextLine();
+                        if (clave.equalsIgnoreCase("s")){
+                            System.out.print("Quin nou valor per "+columna+"? ");
+                            valor=sn.nextLine();
+                            modificarColumnas.put(columna, valor);
+                        }
+                    }
+                    System.out.print("Posa el dni del mecànic que vols modificar: ");
+                    dniModificar=sn.next();
+                    mecanic.modificarMecanic(modificarColumnas,dniModificar);
+                    System.out.println("Actualizar...");
+                    break;
+                case 5:
+                    System.out.print("-------------------ESBORRAR-------------------\n");
+                    String dniEsborrar;
+                    System.out.print("Introdueix el dni del mecànic que vols esborrar: ");
+                    dniEsborrar=sn.next();
+                    System.out.println("Esborrant mecànic...");
+                    mecanic.eliminarMecanic(dniEsborrar);
+                    break;
+                case 6:
+                    salir=true;
+                    break;
+                default:
+                    System.out.println("Únicament nombres del 1 al 6");
+            }
+
+        }
+
     }
 }
 

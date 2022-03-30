@@ -34,7 +34,7 @@ public class Mecanics {
         }
 
     }
-    public void mostrarCotxes(String dniMecanic){
+    public void mostrarMecanics(String dniMecanic){
         try{
             String miDriver="com.mysql.cj.jdbc.Driver";
             String miUrl = "jdbc:mysql://localhost/carsRental";
@@ -67,24 +67,28 @@ public class Mecanics {
         }
     }
 
-    /*ME HE QUEDADO AQUI*/
-    public void inserirCotxe(String matricula, int numBastidor,String marca, String model, String color, int places, int numPortes, double maleter, String tCombustible){
+    public void inserirMecanic(String dniMecanic, String nomCognomM, int edatM, String telM, String adrecaM, String ciutatM, String paisM, String emailM, String permisConduccioM, int puntsM, double salari, int seguretatSocial, String titulacio, int anysEmp){
         try{
             String miDriver="com.mysql.cj.jdbc.Driver";
             String miUrl = "jdbc:mysql://localhost/carsRental";
             Class.forName(miDriver);
             Connection conexion = DriverManager.getConnection(miUrl, "root", "admin");
-            String query = "INSERT INTO COTXES (matricula, numBastidor, marca, model, color, places, numPortes, maleter, tCombustible) values (?, ?, ?, ?, ?, ?, ?, ?, ?);";
+            String query = "INSERT INTO MECANICS (dniMecanic, nomCognomM, edatM, telM, adrecaM, ciutatM, paisM, emailM, permisConduccioM, puntsM, salari, seguretatSocial, titulacio, anysEmp) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
             PreparedStatement preparedStmt = conexion.prepareStatement(query);
-            preparedStmt.setString(1, matricula);
-            preparedStmt.setInt(2, numBastidor);
-            preparedStmt.setString(3, marca);
-            preparedStmt.setString(4, model);
-            preparedStmt.setString(5, color);
-            preparedStmt.setInt(6, places);
-            preparedStmt.setInt(7, numPortes);
-            preparedStmt.setDouble(8, maleter);
-            preparedStmt.setString(9, tCombustible);
+            preparedStmt.setString(1, dniMecanic);
+            preparedStmt.setString(2, nomCognomM);
+            preparedStmt.setInt(3, edatM);
+            preparedStmt.setString(4, telM);
+            preparedStmt.setString(5, adrecaM);
+            preparedStmt.setString(6, ciutatM);
+            preparedStmt.setString(7, paisM);
+            preparedStmt.setString(8, emailM);
+            preparedStmt.setString(9, permisConduccioM);
+            preparedStmt.setInt(10, puntsM);
+            preparedStmt.setDouble(11, salari);
+            preparedStmt.setInt(12, seguretatSocial);
+            preparedStmt.setString(13, titulacio);
+            preparedStmt.setInt(14, anysEmp);
             preparedStmt.executeUpdate();
         }catch (Exception e){
             System.err.println("Ha habido una exception!");
@@ -92,9 +96,9 @@ public class Mecanics {
         }
 
     }
-    public void modificarCotxe(Map<String,String> map, String matriculaCotxe){
+    public void modificarMecanic(Map<String,String> map, String dniMecanic){
         try{
-            String query = "UPDATE Cotxes SET ";
+            String query = "UPDATE Mecanics SET ";
             ArrayList<String> claves = new ArrayList<String>();
             ArrayList<String> valores = new ArrayList<String>();
             String miDriver="com.mysql.cj.jdbc.Driver";
@@ -111,16 +115,16 @@ public class Mecanics {
                 if (claves.size() > 1 && c != last ){
                     query = query + c + " = ?,";
                 }else{
-                    query = query + c + " = ? WHERE matricula = ?;";
+                    query = query + c + " = ? WHERE dniMecanic = ?;";
                 }
             }
             System.out.println(query);
             PreparedStatement preparedStmt = conexion.prepareStatement(query);
             for(int i=0, j=0 ;i < claves.size() && j < valores.size(); i++,j++){
-                if(claves.get(i)=="numBastidor" || claves.get(i)=="places" || claves.get(i)=="numPortes"){
+                if(claves.get(i)=="edatM" || claves.get(i)=="puntsM" || claves.get(i)=="seguretatSocial" || claves.get(i)=="anysEmp"){
                     int valorParseado = Integer.parseInt(valores.get(j));
                     preparedStmt.setInt(i+1, valorParseado);
-                }else if(claves.get(i)=="tCombustible"){
+                }else if(claves.get(i)=="salari"){
                     double valorParseadoaDouble =  Double.parseDouble(valores.get(j));
                     preparedStmt.setDouble(i+1, valorParseadoaDouble);
                 }else{
@@ -128,22 +132,22 @@ public class Mecanics {
                 }
             }
             String lastElement = claves.get(claves.size() - 1);
-            preparedStmt.setString(claves.indexOf(lastElement)+2, matriculaCotxe);
+            preparedStmt.setString(claves.indexOf(lastElement)+2, dniMecanic);
             preparedStmt.executeUpdate();
         }catch (Exception e){
             System.err.println("Ha habido una exception!");
             System.err.println(e.getMessage());
         }
     }
-    public void eliminarCotxe(String matricula){
+    public void eliminarMecanic(String dniMecanic){
         try{
             String miDriver="com.mysql.cj.jdbc.Driver";
             String miUrl = "jdbc:mysql://localhost/carsRental";
             Class.forName(miDriver);
             Connection conexion = DriverManager.getConnection(miUrl, "root", "admin");
-            String query = "DELETE FROM Cotxes WHERE matricula = ?;";
+            String query = "DELETE FROM Cotxes WHERE dniMecanic = ?;";
             PreparedStatement preparedStmt = conexion.prepareStatement(query);
-            preparedStmt.setString(1, matricula);
+            preparedStmt.setString(1, dniMecanic);
             preparedStmt.executeUpdate();
         }catch (Exception e){
             System.err.println("Ha habido una exception!");
