@@ -1,15 +1,33 @@
-import java.sql.Array;
 import java.util.*;
 
 public class main {
     public static void main(String[] args) {
         Clients client = new Clients();
+        Cotxes cotxe = new Cotxes();
         Scanner sn = new Scanner(System.in);
         boolean salir = false;
         int opcion;
 
         while(!salir){
-            System.out.println("Datos de la Base de datos carsRental");
+            System.out.println("CARS RENTAL");
+            System.out.println("1.Gestionar Clients");
+            System.out.println("2.Gestionar Cotxes");
+            System.out.println("6.Salir");
+            System.out.print("Escribe una de las opciones --> ");
+            opcion=sn.nextInt();
+            switch (opcion){
+                case 1:
+                    menuCliente(client, sn);
+                    break;
+            }
+        }
+    }
+    public static void menuCliente(Clients client, Scanner sn) {
+        sn.nextLine(); //refresca scanner
+        boolean salir = false;
+        int opcionMenu;
+        while(!salir){
+            System.out.println("Benvingut a la secció de Clients, què vol fer?");
             System.out.println("1.MostrarTodos");
             System.out.println("2.Mostrar por dni");
             System.out.println("3.Inserir");
@@ -17,9 +35,8 @@ public class main {
             System.out.println("5.Eliminar por dni");
             System.out.println("6.Salir");
             System.out.print("Escribe una de las opciones --> ");
-            opcion=sn.nextInt();
-
-            switch (opcion){
+            opcionMenu=sn.nextInt();
+            switch (opcionMenu){
                 case 1:
                     System.out.println("Mostrando todos los datos...");
                     client.mostrarTots();
@@ -33,7 +50,7 @@ public class main {
 
                     break;
                 case 3:
-                    String dniInsertar,nom, tel, adreca,ciutat,pais,email,permis;
+                    String dniInsertar,nom,tel,adreca,ciutat,pais,email,permis;
                     int edat, punts;
                     System.out.println("Introdueix les dades del client a crear ");
                     sn.nextLine(); //refresca el scanner
@@ -62,7 +79,6 @@ public class main {
                         String valor;
                         System.out.print("Vols modificar "+columna+"? (s/n) ");
                         clave=sn.nextLine();
-                        //sn.nextLine();
                         if (clave.equalsIgnoreCase("s")){
                             System.out.print("Quin nou valor per "+columna+"? ");
                             valor=sn.nextLine();
@@ -87,6 +103,9 @@ public class main {
                 default:
                     System.out.println("Únicament nombres del 1 al 6");
             }
+
         }
+
     }
 }
+
