@@ -1,8 +1,5 @@
 import java.sql.Array;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Scanner;
+import java.util.*;
 
 public class main {
     public static void main(String[] args) {
@@ -39,23 +36,22 @@ public class main {
                     String dniInsertar,nom, tel, adreca,ciutat,pais,email,permis;
                     int edat,punts;
                     System.out.println("Introdueix les dades del usuario a mostrar ");
-                    System.out.print("DNI: "); dniInsertar=sn.next();
-                    System.out.print("Nom: "); nom=sn.next();
+                    System.out.print("DNI: "); dniInsertar=sn.nextLine();
+                    System.out.print("Nom y Cognom: "); nom=sn.nextLine();
                     System.out.print("Edat: "); edat=sn.nextInt();
-                    System.out.print("Telèfon: "); tel=sn.next();
-                    System.out.print("Adreça: "); adreca=sn.next();
-                    System.out.print("Ciutat: "); ciutat=sn.next();
-                    System.out.print("Pais: "); pais=sn.next();
-                    System.out.print("Email: "); email=sn.next();
-                    System.out.print("Permis: "); permis=sn.next();
+                    System.out.print("Telèfon: "); tel=sn.nextLine();
+                    System.out.print("Adreça: "); adreca=sn.nextLine();
+                    System.out.print("Ciutat: "); ciutat=sn.nextLine();
+                    System.out.print("Pais: "); pais=sn.nextLine();
+                    System.out.print("Email: "); email=sn.nextLine();
+                    System.out.print("Permis: "); permis=sn.nextLine();
                     System.out.print("Punts: "); punts=sn.nextInt();
                     System.out.println("Inserint el client.....");
                     client.inserirClient(dniInsertar,nom, edat, tel, adreca, ciutat, pais, email, permis, punts);
                     break;
                 case 4:
                     String [] columnas = new String[]{"nomCognom","dni","edat","telefon","adreca","ciutat","pais","email","permisConduccio","punts"};
-                    ArrayList<String> tmpArray = new ArrayList<String>();
-                    Map<String,String> modificarColumnas = new HashMap<String,String>();
+                    Map<String,String> modificarColumnas = new TreeMap<>();
                     String dniModificar;
                     for(String columna :columnas){
                         String clave;
@@ -68,11 +64,10 @@ public class main {
                             valor=sn.next();
                             modificarColumnas.put(columna, valor);
                         }
-                        System.out.println(modificarColumnas);
                     }
-                    //System.out.print("Posa el dni del client que vols modificar: ");
-                    //dniModificar=sn.next();
-                    //client.modificarCliente(modificarColumnas,dniModificar);
+                    System.out.print("Posa el dni del client que vols modificar: ");
+                    dniModificar=sn.next();
+                    client.modificarCliente(modificarColumnas,dniModificar);
                     //System.out.println("Actualizar...");
                     //client.modificarCliente("55555","22222","Pepito");
                     break;

@@ -1,6 +1,7 @@
 INSERT INTO clients values("46465746W", "Judith Barrajon", 27, "607652294","calle Castelao num 24 ","Hospitalet","Espanya","prueba@prueba.com",'A2',12);
 /*delete from clients where dni = "46465746W";
 UPDATE clients set permisConduccio = 'A2' where nomCognom = "Judith Barrajon";*/
+UPDATE Clients SET nomCognom = "pepe" WHERE dni = "1234";
 select * from clients;
 SELECT * FROM clients WHERE UPPER(dni) LIKE '46465746w';
 /*----------------------------------------------*/

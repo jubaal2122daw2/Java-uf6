@@ -1,3 +1,4 @@
+import java.security.KeyStore;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Map;
@@ -87,38 +88,47 @@ public class Clients {
         }
 
     }
-    public void modificarCliente(Map<String,String> array, String dni){
+    public void modificarCliente(Map<String,String> map, String dniCliente){
         try{
             String query = "UPDATE Clients SET ";
+            ArrayList<String> claves = new ArrayList<String>();
+            ArrayList<String> valores = new ArrayList<String>();
             String miDriver="com.mysql.cj.jdbc.Driver";
             String miUrl = "jdbc:mysql://localhost/carsRental";
             Class.forName(miDriver);
             Connection conexion = DriverManager.getConnection(miUrl, "root", "admin");
 
-            /*for(String a : array){
-                String last = array.get(array.size() - 1);
-                if (array.size() > 1 && a != last ){
-                    query = query + a + " = ?,";
-                }else if (a == last){
-                    query = query + a + " = ? WHERE dni = ?;";
+            for (String key : map.keySet()) {
+                claves.add(key);
+                valores.add(map.get(key));
+            }
+            for(String c : claves){
+                String last = claves.get(claves.size() - 1);
+                if (claves.size() > 1 && c != last ){
+                    query = query + c + " = ?,";
+                }else if (c == last){
+                    query = query + c + " = ? WHERE dni = ?;";
                 }else{
-                    query = query + a + " = ? WHERE dni = ?;";
+                    query = query + c + " = ? WHERE dni = ?;";
                 }
-            }*/
-            //System.out.println(query);
+            }
+
+            System.out.println(query);
             //String query = "UPDATE Clients SET telefon = ?, nomCognom = ? WHERE dni = ?;";
             PreparedStatement preparedStmt = conexion.prepareStatement(query);
-            for(int i = 0; i< array.size(); i++){
-                if(array.get(i)=="edat" || array.get(i)=="punts"){
-                    //"hay que parsear el valor"
+            for(int i=0, j=0 ;i < claves.size() && j < valores.size(); i++,j++){
+                if(claves.get(i)=="edat" || claves.get(i)=="punts"){
+                    int valorParseado = Integer.parseInt(valores.get(j));
+                    preparedStmt.setInt(i+1, valorParseado);
+                }else{
+                    preparedStmt.setString(i+1, valores.get(j));
                 }
-                preparedStmt.setString(i+1, "aqui va el valor");
-                preparedStmt.executeUpdate();
+                //System.out.println("Clave: "+claves.get(i)+" Index: "+(i+1)+" Valor: "+valores.get(j));
             }
-            /*preparedStmt.setString(1, tel);
-            preparedStmt.setString(2, nomCognom);
-            preparedStmt.setString(3, dni);
-            preparedStmt.executeUpdate();*/
+            String lastElement = claves.get(claves.size() - 1);
+            //System.out.println("Ultimo index del array claves -->"+claves.indexOf(lastElement));
+            preparedStmt.setString(claves.indexOf(lastElement)+2, dniCliente);
+            preparedStmt.executeUpdate();
         }catch (Exception e){
             System.err.println("Ha habido una exception!");
             System.err.println(e.getMessage());
