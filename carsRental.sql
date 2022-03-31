@@ -5,6 +5,7 @@ UPDATE Clients SET nomCognom = "pepe" WHERE dni = "1234";
 select * from clients;
 select * from cotxes;
 select * from mecanics;
+SELECT * FROM Mecanics WHERE dniMecanic = "00" or nomCognomM = "franky v";
 SELECT * FROM clients WHERE UPPER(dni) LIKE '46465746w';
 /*----------------------------------------------*/
 CREATE DATABASE carsRental;
@@ -45,10 +46,12 @@ create table Lloguer(
     llocDevolucio varchar(100),
     depositPle boolean, 
     tAsseguranca varchar(30),
-    FOREIGN KEY (dni) REFERENCES Clients(dni),
-    FOREIGN KEY (matricula) REFERENCES Cotxes(matricula),
+    FOREIGN KEY (dni) REFERENCES Clients(dni) on update cascade on delete cascade,
+    FOREIGN KEY (matricula) REFERENCES Cotxes(matricula) on update cascade on delete cascade,
     PRIMARY KEY (dni,matricula)
 );
+INSERT INTO Lloguer values("46465746W", "1234ABC", 7, 10.50,"Estocolmo",true,"Con Franquicia");
+select matricula, c.dni, nomCognom, telefon from clients c, lloguer l where l.dni = c.dni;
 
 create table Mecanics(
 	dniMecanic varchar(10) primary key,
@@ -72,7 +75,7 @@ create table Manteniment(
     matricula varchar(10),
     dataInici date,
     dataFi date,
-    FOREIGN KEY (dniMecanic) REFERENCES Mecanics(dniMecanic),
-    FOREIGN KEY (matricula) REFERENCES Cotxes(matricula),
+    FOREIGN KEY (dniMecanic) REFERENCES Mecanics(dniMecanic)  on update cascade on delete cascade,
+    FOREIGN KEY (matricula) REFERENCES Cotxes(matricula)  on update cascade on delete cascade,
     PRIMARY KEY (dniMecanic,matricula)
 );
