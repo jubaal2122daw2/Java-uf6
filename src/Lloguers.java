@@ -12,13 +12,19 @@ public class Lloguers {
             Statement sentencia = conexion.createStatement();
             ResultSet resul = sentencia.executeQuery("SELECT * FROM Lloguer;");
             while(resul.next()){
+                String canviBoolean = "";
                 System.out.println("Dni: "+resul.getString("dni"));
-                System.out.println("Nom i cognom: "+resul.getString("matricula"));
-                System.out.println("Edat: "+resul.getString("dies"));
-                System.out.println("Telèfon: "+resul.getString("preu"));
-                System.out.println("Adreça: "+resul.getString("llocDevolucio"));
-                System.out.println("Ciutat: "+resul.getString("depositPle"));
-                System.out.println("Pais: "+resul.getString("tAsseguranca"));
+                System.out.println("Matrícula: "+resul.getString("matricula"));
+                System.out.println("Dies: "+resul.getString("dies"));
+                System.out.println("Preu per dia: "+resul.getString("preu"));
+                System.out.println("Lloc de devolució: "+resul.getString("llocDevolucio"));
+                if(resul.getString("depositPle").equalsIgnoreCase("1")){
+                    canviBoolean = "Sí";
+                }else{
+                    canviBoolean = "No";
+                }
+                System.out.println("Retorn de depòsit ple: "+canviBoolean);
+                System.out.println("Tipus Assegurança: "+resul.getString("tAsseguranca"));
                 System.out.println("-----------------------------------------------\n");
             }
         }catch (Exception e){
@@ -27,25 +33,31 @@ public class Lloguers {
         }
 
     }
-    public void mostrarLloguers(String dni, String matricula){
+    public void mostrarLloguers(String valor){
         try{
             String miDriver="com.mysql.cj.jdbc.Driver";
             String miUrl = "jdbc:mysql://localhost/carsRental";
+            String canviBoolean = "";
             Class.forName(miDriver);
             Connection conexion = DriverManager.getConnection(miUrl, "root", "admin");
             String query = "SELECT * FROM Lloguer WHERE dni = ? or matricula= ?";
             PreparedStatement preparedStmt = conexion.prepareStatement(query);
-            preparedStmt.setString(1, dni);
-            preparedStmt.setString(2, matricula);
+            preparedStmt.setString(1, valor);
+            preparedStmt.setString(2, valor);
             ResultSet resul = preparedStmt.executeQuery();
             while(resul.next()){
                 System.out.println("Dni: "+resul.getString("dni"));
-                System.out.println("Nom i cognom: "+resul.getString("matricula"));
-                System.out.println("Edat: "+resul.getString("dies"));
-                System.out.println("Telèfon: "+resul.getString("preu"));
-                System.out.println("Adreça: "+resul.getString("llocDevolucio"));
-                System.out.println("Ciutat: "+resul.getString("depositPle"));
-                System.out.println("Pais: "+resul.getString("tAsseguranca"));
+                System.out.println("Matrícula: "+resul.getString("matricula"));
+                System.out.println("Dies: "+resul.getString("dies"));
+                System.out.println("Preu per dia: "+resul.getString("preu"));
+                System.out.println("Lloc de devolució: "+resul.getString("llocDevolucio"));
+                if(resul.getString("depositPle").equalsIgnoreCase("1")){
+                    canviBoolean = "Sí";
+                }else{
+                    canviBoolean = "No";
+                }
+                System.out.println("Retorn de depòsit ple: "+canviBoolean);
+                System.out.println("Tipus Assegurança: "+resul.getString("tAsseguranca"));
                 System.out.println("-----------------------------------------------\n");
             }
         }catch (Exception e){
@@ -100,7 +112,6 @@ public class Lloguers {
             }
             System.out.println(query);
             PreparedStatement preparedStmt = conexion.prepareStatement(query);
-            //String dni, String matricula, int dies, double preu, String llocDevolucio, boolean depositPle, String tAsseguranca
             for(int i=0, j=0 ;i < claves.size() && j < valores.size(); i++,j++){
                 if(claves.get(i)=="dies"){
                     int valorParseado = Integer.parseInt(valores.get(j));

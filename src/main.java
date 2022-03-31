@@ -16,6 +16,7 @@ public class main {
             System.out.println("1.Gestionar Clients");
             System.out.println("2.Gestionar Cotxes");
             System.out.println("3.Gestionar Mecànics");
+            System.out.println("4.Gestionar Lloguers");
             System.out.println("6.Salir");
             System.out.print("Escriu una de les opcions --> ");
             opcion=sn.nextInt();
@@ -28,6 +29,9 @@ public class main {
                     break;
                 case 3:
                     menuMecanics(mecanic, sn);
+                    break;
+                case 4:
+                    menuLloguers(lloguer, sn);
                     break;
                 case 6:
                     salir=true;
@@ -174,7 +178,7 @@ public class main {
                     System.out.print("Maleter (l): "); maleter=sn.nextDouble();
                     sn.nextLine();
                     System.out.print("Tipus de Combustible: "); tCombustible=sn.nextLine();
-                    System.out.println("Inserint el client.....");
+                    System.out.println("Inserint el cotxe.....");
                     cotxe.inserirCotxe(matriculaInsertar,numBastidor, marca, model, color, places, numPortes, maleter, tCombustible);
                     break;
                 case 4:
@@ -316,16 +320,16 @@ public class main {
 
     }
 
-    public static void menuLloguers(Lloguer lloguer, Scanner sn){
+    public static void menuLloguers(Lloguers lloguer, Scanner sn){
         sn.nextLine(); //refresca scanner
         boolean salir = false;
         int opcionMenu;
         while(!salir){
-            System.out.println("Benvingut a la secció de Cotxes, què vol fer?");
-            System.out.println("1.Mostrar tots els cotxes");
-            System.out.println("2.Mostrar per matricula");
-            System.out.println("3.Inserir");
-            System.out.println("4.Actualitzar");
+            System.out.println("Benvingut a la secció de Lloguers, què vol fer?");
+            System.out.println("1.Mostrar tots els lloguers");
+            System.out.println("2.Cercar per matricula o dni");
+            System.out.println("3.Inserir un nou lloguer");
+            System.out.println("4.Actualitzar un lloguer per dni del client");
             System.out.println("5.Esborrar per matricula");
             System.out.println("6.Tornar al menú principal");
             System.out.print("Escriu una de les opcions --> ");
@@ -334,38 +338,46 @@ public class main {
             switch (opcionMenu){
                 case 1:
                     System.out.print("-------------------MOSTRAR DADES-------------------\n");
-                    cotxe.mostrarTots();
+                    lloguer.mostrarTots();
                     break;
                 case 2:
-                    System.out.print("-------------------MOSTRAR DADES PER MATRICULA-------------------\n");
-                    String matricula;
-                    System.out.print("Introdueix la matricula del cotxe que vols buscar: ");
-                    matricula=sn.next();
+                    System.out.print("-------------------MOSTRAR DADES PER MATRICULA O DNI-------------------\n");
+                    String input;
+                    System.out.print("Introdueix la matricula o el dni del lloguer que vols buscar: ");
+                    input=sn.next();
                     System.out.println("Mostrar cotxe per la matricula...");
-                    cotxe.mostrarCotxes(matricula);
+                    lloguer.mostrarLloguers(input);
                     break;
                 case 3:
                     System.out.print("-------------------INSERIR-------------------\n");
-                    String matriculaInsertar,marca,model,color,tCombustible;
-                    int numBastidor, places, numPortes;
-                    double maleter;
+                    String dniInsertar,matriculaInsertar,llocDevolucio,tAsseguranca;
+                    int dies;
+                    double preu;
+                    boolean depositPle;
+                    //dni, matricula, dies, preu, llocDevolucio, depositPle, tAsseguranca
                     System.out.println("Introdueix les dades del cotxe a crear ");
                     sn.nextLine(); //refresca el scanner
+                    System.out.print("Dni Client: "); dniInsertar=sn.nextLine();
                     System.out.print("Matrícula: "); matriculaInsertar=sn.nextLine();
-                    System.out.print("Nº Bastidor: "); numBastidor=sn.nextInt();
+                    System.out.print("Dies "); dies=sn.nextInt();
                     sn.nextLine();
-                    System.out.print("Marca: "); marca=sn.nextLine();
-                    System.out.print("Model: "); model=sn.nextLine();
-                    System.out.print("Color: "); color=sn.nextLine();
-                    System.out.print("Places: "); places=sn.nextInt();
+                    System.out.print("Preu: "); preu=sn.nextInt();
                     sn.nextLine();
-                    System.out.print("Nº Portes: "); numPortes=sn.nextInt();
+                    System.out.print("Lloc Devolució: "); llocDevolucio=sn.nextLine();
+                    System.out.print("Retorn de depòsit ple (S/N): "); depositPle=sn.nextLine();
+                    if(depositPle){
+
+                    }
                     sn.nextLine();
-                    System.out.print("Maleter (l): "); maleter=sn.nextDouble();
+                    System.out.print("Tipus Assegurança (Amb Franquisia [S], Sense Franquisia [N]): "); tAsseguranca=sn.nextLine();
                     sn.nextLine();
-                    System.out.print("Tipus de Combustible: "); tCombustible=sn.nextLine();
-                    System.out.println("Inserint el client.....");
-                    cotxe.inserirCotxe(matriculaInsertar,numBastidor, marca, model, color, places, numPortes, maleter, tCombustible);
+                    if (tAsseguranca.equalsIgnoreCase("S")){
+                        tAsseguranca = "Amb Franquisia";
+                    }else{
+                        tAsseguranca = "Sense Franquisia";
+                    }
+                    System.out.println("Inserint el lloguer.....");
+                    lloguer.inserirLloguer(dniInsertar,matriculaInsertar, dies, preu, llocDevolucio, depositPle, tAsseguranca);
                     break;
                 case 4:
                     System.out.print("-------------------ACTUALITZAR-------------------\n");
@@ -386,7 +398,7 @@ public class main {
                     }
                     System.out.print("Posa la matricula del cotxe que vols modificar: ");
                     matriculaModificar=sn.next();
-                    cotxe.modificarCotxe(modificarColumnas,matriculaModificar);
+                    //cotxe.modificarCotxe(modificarColumnas,matriculaModificar);
                     System.out.println("Actualitzant...");
                     break;
                 case 5:
@@ -395,7 +407,7 @@ public class main {
                     System.out.print("Introdueix la matricula del cotxe que vols esborrar: ");
                     matriculaEsborrar=sn.next();
                     System.out.println("Esborrant cotxe...");
-                    cotxe.eliminarCotxe(matriculaEsborrar);
+                    //cotxe.eliminarCotxe(matriculaEsborrar);
                     break;
                 case 6:
                     salir=true;
