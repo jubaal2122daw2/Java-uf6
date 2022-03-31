@@ -107,7 +107,7 @@ public class Lloguers {
                 if (claves.size() > 1 && c != last ){
                     query = query + c + " = ?,";
                 }else{
-                    query = query + c + " = ? WHERE dni = ?;";
+                    query = query + c + " = ? WHERE matricula = ?;";
                 }
             }
             System.out.println(query);
@@ -140,7 +140,7 @@ public class Lloguers {
             String miUrl = "jdbc:mysql://localhost/carsRental";
             Class.forName(miDriver);
             Connection conexion = DriverManager.getConnection(miUrl, "root", "admin");
-            String query = "DELETE FROM Lloguer WHERE  = matricula?;";
+            String query = "DELETE FROM Lloguer WHERE matricula = ?;";
             PreparedStatement preparedStmt = conexion.prepareStatement(query);
             preparedStmt.setString(1, matricula);
             preparedStmt.executeUpdate();

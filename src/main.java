@@ -44,7 +44,7 @@ public class main {
         boolean salir = false;
         int opcionMenu;
         while(!salir){
-            System.out.println("Benvingut a la secció de Clients, què vol fer?");
+            System.out.println("----Benvingut a la secció de Clients, què vol fer?----");
             System.out.println("1.Mostrar tots els clients");
             System.out.println("2.Mostrar per dni");
             System.out.println("3.Inserir");
@@ -56,12 +56,12 @@ public class main {
             opcionMenu=sn.nextInt();
             switch (opcionMenu){
                 case 1:
-                    System.out.print("-------------------MOSTRAR DADES-------------------\n");
+                    System.out.print("\n-------------------MOSTRAR DADES-------------------\n");
                     System.out.println("Mostrant totes les dades...");
                     client.mostrarTots();
                     break;
                 case 2:
-                    System.out.print("-------------------MOSTRAR PER DNI-------------------\n");
+                    System.out.print("\n-------------------MOSTRAR PER DNI-------------------\n");
                     String dni;
                     System.out.print("Introdueix el dni del client que vols buscar: ");
                     dni=sn.next();
@@ -69,7 +69,7 @@ public class main {
                     client.mostrarClient(dni);
                     break;
                 case 3:
-                    System.out.print("-------------------INSERIR-------------------\n");
+                    System.out.print("\n-------------------INSERIR-------------------\n");
                     String dniInsertar,nom,tel,adreca,ciutat,pais,email,permis;
                     int edat, punts;
                     System.out.println("Introdueix les dades del client a crear ");
@@ -90,7 +90,7 @@ public class main {
                     client.inserirClient(dniInsertar,nom, edat, tel, adreca, ciutat, pais, email, permis, punts);
                     break;
                 case 4:
-                    System.out.print("-------------------ACTUALITZAR-------------------\n");
+                    System.out.print("\n-------------------ACTUALITZAR-------------------\n");
                     String [] columnas = new String[]{"nomCognom","dni","edat","telefon","adreca","ciutat","pais","email","permisConduccio","punts"};
                     Map<String,String> modificarColumnas = new TreeMap<>();
                     String dniModificar;
@@ -112,7 +112,7 @@ public class main {
                     System.out.println("Actualizar...");
                     break;
                 case 5:
-                    System.out.print("-------------------ESBORRAR-------------------\n");
+                    System.out.print("\n-------------------ESBORRAR-------------------\n");
                     String dniEsborrar;
                     System.out.print("Introdueix el dni del client que vols esborrar: ");
                     dniEsborrar=sn.next();
@@ -135,7 +135,7 @@ public class main {
         boolean salir = false;
         int opcionMenu;
         while(!salir){
-            System.out.println("Benvingut a la secció de Cotxes, què vol fer?");
+            System.out.println("----Benvingut a la secció de Cotxes, què vol fer?----");
             System.out.println("1.Mostrar tots els cotxes");
             System.out.println("2.Mostrar per matricula");
             System.out.println("3.Inserir");
@@ -147,11 +147,11 @@ public class main {
             opcionMenu=sn.nextInt();
             switch (opcionMenu){
                 case 1:
-                    System.out.print("-------------------MOSTRAR DADES-------------------\n");
+                    System.out.print("\n-------------------MOSTRAR DADES-------------------\n");
                     cotxe.mostrarTots();
                     break;
                 case 2:
-                    System.out.print("-------------------MOSTRAR DADES PER MATRICULA-------------------\n");
+                    System.out.print("\n-------------------MOSTRAR DADES PER MATRICULA-------------------\n");
                     String matricula;
                     System.out.print("Introdueix la matricula del cotxe que vols buscar: ");
                     matricula=sn.next();
@@ -159,7 +159,7 @@ public class main {
                     cotxe.mostrarCotxes(matricula);
                     break;
                 case 3:
-                    System.out.print("-------------------INSERIR-------------------\n");
+                    System.out.print("\n-------------------INSERIR-------------------\n");
                     String matriculaInsertar,marca,model,color,tCombustible;
                     int numBastidor, places, numPortes;
                     double maleter;
@@ -182,7 +182,7 @@ public class main {
                     cotxe.inserirCotxe(matriculaInsertar,numBastidor, marca, model, color, places, numPortes, maleter, tCombustible);
                     break;
                 case 4:
-                    System.out.print("-------------------ACTUALITZAR-------------------\n");
+                    System.out.print("\n-------------------ACTUALITZAR-------------------\n");
                     String [] columnas = new String[]{"matricula","numBastidor","marca","model","color","places","numPortes","maleter","tCombustible"};
                     Map<String,String> modificarColumnas = new TreeMap<>();
                     String matriculaModificar;
@@ -204,7 +204,7 @@ public class main {
                     System.out.println("Actualitzant...");
                     break;
                 case 5:
-                    System.out.print("-------------------ESBORRAR-------------------\n");
+                    System.out.print("\n-------------------ESBORRAR-------------------\n");
                     String matriculaEsborrar;
                     System.out.print("Introdueix la matricula del cotxe que vols esborrar: ");
                     matriculaEsborrar=sn.next();
@@ -226,7 +226,7 @@ public class main {
         boolean salir = false;
         int opcionMenu;
         while(!salir){
-            System.out.println("Benvingut a la secció de Mecànics, què vol fer?");
+            System.out.println("----Benvingut a la secció de Mecànics, què vol fer?----");
             System.out.println("1.Mostrar tots els mecànics");
             System.out.println("2.Mostrar per dni");
             System.out.println("3.Inserir");
@@ -238,12 +238,12 @@ public class main {
             opcionMenu=sn.nextInt();
             switch (opcionMenu){
                 case 1:
-                    System.out.print("-------------------MOSTRAR DADES-------------------\n");
+                    System.out.print("\n-------------------MOSTRAR DADES-------------------\n");
                     System.out.println("Mostrant totes les dades...");
                     mecanic.mostrarTots();
                     break;
                 case 2:
-                    System.out.print("-------------------MOSTRAR PER DNI-------------------\n");
+                    System.out.print("\n-------------------MOSTRAR PER DNI-------------------\n");
                     String dni;
                     System.out.print("Introdueix el dni del mecanic que vols buscar: ");
                     dni=sn.next();
@@ -251,7 +251,7 @@ public class main {
                     mecanic.mostrarMecanics(dni);
                     break;
                 case 3:
-                    System.out.print("-------------------INSERIR-------------------\n");
+                    System.out.print("\n-------------------INSERIR-------------------\n");
                     String dniInsertar,nomCognomM,telM,adrecaM,ciutatM,paisM,emailM,permisConduccioM, titulacio;
                     int edatM, puntsM, seguretatSocial, anysEmp;
                     double salari;
@@ -280,7 +280,7 @@ public class main {
                     mecanic.inserirMecanic(dniInsertar,nomCognomM, edatM, telM, adrecaM, ciutatM, paisM, emailM, permisConduccioM, puntsM, salari, seguretatSocial, titulacio, anysEmp);
                     break;
                 case 4:
-                    System.out.print("-------------------ACTUALITZAR-------------------\n");
+                    System.out.print("\n-------------------ACTUALITZAR-------------------\n");
                     String [] columnas = new String[]{"nomCognomM","dniMecanic","edatM","telM","adrecaM","ciutatM","paisM","emailM","permisConduccioM","puntsM", "salari", "seguretatSocial","titulacio", "anysEmp"};
                     Map<String,String> modificarColumnas = new TreeMap<>();
                     String dniModificar;
@@ -302,7 +302,7 @@ public class main {
                     System.out.println("Actualizar...");
                     break;
                 case 5:
-                    System.out.print("-------------------ESBORRAR-------------------\n");
+                    System.out.print("\n-------------------ESBORRAR-------------------\n");
                     String dniEsborrar;
                     System.out.print("Introdueix el dni del mecànic que vols esborrar: ");
                     dniEsborrar=sn.next();
@@ -325,11 +325,11 @@ public class main {
         boolean salir = false;
         int opcionMenu;
         while(!salir){
-            System.out.println("Benvingut a la secció de Lloguers, què vol fer?");
+            System.out.println("----Benvingut a la secció de Lloguers, què vol fer?----");
             System.out.println("1.Mostrar tots els lloguers");
             System.out.println("2.Cercar per matricula o dni");
             System.out.println("3.Inserir un nou lloguer");
-            System.out.println("4.Actualitzar un lloguer per dni del client");
+            System.out.println("4.Actualitzar un lloguer per la matricula del cotxe");
             System.out.println("5.Esborrar per matricula");
             System.out.println("6.Tornar al menú principal");
             System.out.print("Escriu una de les opcions --> ");
@@ -337,11 +337,11 @@ public class main {
             opcionMenu=sn.nextInt();
             switch (opcionMenu){
                 case 1:
-                    System.out.print("-------------------MOSTRAR DADES-------------------\n");
+                    System.out.print("\n-------------------MOSTRAR DADES-------------------\n");
                     lloguer.mostrarTots();
                     break;
                 case 2:
-                    System.out.print("-------------------MOSTRAR DADES PER MATRICULA O DNI-------------------\n");
+                    System.out.print("\n-------------------MOSTRAR DADES PER MATRICULA O DNI-------------------\n");
                     String input;
                     System.out.print("Introdueix la matricula o el dni del lloguer que vols buscar: ");
                     input=sn.next();
@@ -349,65 +349,84 @@ public class main {
                     lloguer.mostrarLloguers(input);
                     break;
                 case 3:
-                    System.out.print("-------------------INSERIR-------------------\n");
-                    String dniInsertar,matriculaInsertar,llocDevolucio,tAsseguranca;
+                    System.out.print("\n------------------INSERIR-------------------\n");
+                    String dniInsertar,matriculaInsertar,llocDevolucio,tAsseguranca, depositPle;
                     int dies;
                     double preu;
-                    boolean depositPle;
-                    //dni, matricula, dies, preu, llocDevolucio, depositPle, tAsseguranca
-                    System.out.println("Introdueix les dades del cotxe a crear ");
+                    boolean toBoolean;
+                    System.out.println("Introdueix les dades del lloguer a crear ");
                     sn.nextLine(); //refresca el scanner
                     System.out.print("Dni Client: "); dniInsertar=sn.nextLine();
                     System.out.print("Matrícula: "); matriculaInsertar=sn.nextLine();
-                    System.out.print("Dies "); dies=sn.nextInt();
+                    System.out.print("Dies: "); dies=sn.nextInt();
                     sn.nextLine();
                     System.out.print("Preu: "); preu=sn.nextInt();
                     sn.nextLine();
                     System.out.print("Lloc Devolució: "); llocDevolucio=sn.nextLine();
                     System.out.print("Retorn de depòsit ple (S/N): "); depositPle=sn.nextLine();
-                    if(depositPle){
-
+                    if(depositPle.equalsIgnoreCase("S")){
+                        depositPle = "true";
+                        toBoolean = Boolean.parseBoolean(depositPle);
+                    }else{
+                        depositPle = "false";
+                        toBoolean = Boolean.parseBoolean(depositPle);
                     }
-                    sn.nextLine();
                     System.out.print("Tipus Assegurança (Amb Franquisia [S], Sense Franquisia [N]): "); tAsseguranca=sn.nextLine();
-                    sn.nextLine();
                     if (tAsseguranca.equalsIgnoreCase("S")){
                         tAsseguranca = "Amb Franquisia";
                     }else{
                         tAsseguranca = "Sense Franquisia";
                     }
                     System.out.println("Inserint el lloguer.....");
-                    lloguer.inserirLloguer(dniInsertar,matriculaInsertar, dies, preu, llocDevolucio, depositPle, tAsseguranca);
+                    lloguer.inserirLloguer(dniInsertar,matriculaInsertar, dies, preu, llocDevolucio, toBoolean, tAsseguranca);
                     break;
                 case 4:
-                    System.out.print("-------------------ACTUALITZAR-------------------\n");
-                    String [] columnas = new String[]{"matricula","numBastidor","marca","model","color","places","numPortes","maleter","tCombustible"};
+                    System.out.print("\n-------------------ACTUALITZAR-------------------\n");
+                    String [] columnas = new String[]{"dni","dies","preu","llocDevolucio","depositPle","tAsseguranca"};
                     Map<String,String> modificarColumnas = new TreeMap<>();
-                    String matriculaModificar;
+                    String dniModificar;
                     sn.nextLine(); //refresca scanner
                     for(String columna :columnas){
                         String clave;
-                        String valor;
+                        String valor="";
                         System.out.print("Vols modificar "+columna+"? (s/n) ");
                         clave=sn.nextLine();
                         if (clave.equalsIgnoreCase("s")){
                             System.out.print("Quin nou valor per "+columna+"? ");
-                            valor=sn.nextLine();
+                            if(columna.equalsIgnoreCase("tAsseguranca")){
+                                System.out.print("\nTipus Assegurança:\n\tAmb Franquisia [S], Sense Franquisia [N]: ");
+                                valor=sn.nextLine();
+                                if(valor.equalsIgnoreCase("S")){
+                                    valor = "Amb Franquisia";
+                                }else{
+                                    valor = "Sense Franquisia";
+                                }
+                            }else if(columna.equalsIgnoreCase("depositPle")){
+                                System.out.print("\n\tRetorn de depòsit ple (S/N): ");
+                                valor=sn.nextLine();
+                                if(valor.equalsIgnoreCase("S")){
+                                    valor = "true";
+                                }else{
+                                    valor = "false";
+                                }
+                            }else{
+                                valor=sn.nextLine();
+                            }
                             modificarColumnas.put(columna, valor);
                         }
                     }
-                    System.out.print("Posa la matricula del cotxe que vols modificar: ");
-                    matriculaModificar=sn.next();
-                    //cotxe.modificarCotxe(modificarColumnas,matriculaModificar);
+                    System.out.print("Posa la matricula del cotxe per modificar el seu lloguer: ");
+                    dniModificar=sn.next();
+                    lloguer.modificarLloguer(modificarColumnas,dniModificar);
                     System.out.println("Actualitzant...");
                     break;
                 case 5:
-                    System.out.print("-------------------ESBORRAR-------------------\n");
+                    System.out.print("\n-------------------ESBORRAR-------------------\n");
                     String matriculaEsborrar;
-                    System.out.print("Introdueix la matricula del cotxe que vols esborrar: ");
+                    System.out.print("Introdueix la matricula del cotxe per esborrar el seu lloguer: ");
                     matriculaEsborrar=sn.next();
                     System.out.println("Esborrant cotxe...");
-                    //cotxe.eliminarCotxe(matriculaEsborrar);
+                    lloguer.eliminarLloguer(matriculaEsborrar);
                     break;
                 case 6:
                     salir=true;
