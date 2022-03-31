@@ -1,3 +1,7 @@
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.*;
 
 public class main {
@@ -6,18 +10,21 @@ public class main {
         Cotxes cotxe = new Cotxes();
         Mecanics mecanic = new Mecanics();
         Lloguers lloguer = new Lloguers();
+        Manteniment manteniment = new Manteniment();
 
         Scanner sn = new Scanner(System.in);
         boolean salir = false;
         int opcion;
 
         while(!salir){
-            System.out.println("CARS RENTAL");
+            System.out.println("--------CARS RENTAL--------");
             System.out.println("1.Gestionar Clients");
             System.out.println("2.Gestionar Cotxes");
             System.out.println("3.Gestionar Mecànics");
             System.out.println("4.Gestionar Lloguers");
-            System.out.println("6.Salir");
+            System.out.println("5.Gestionar Manteniment");
+            System.out.println("6.Veure el registre de lloguers");
+            System.out.println("0.Salir");
             System.out.print("Escriu una de les opcions --> ");
             opcion=sn.nextInt();
             switch (opcion){
@@ -33,7 +40,13 @@ public class main {
                 case 4:
                     menuLloguers(lloguer, sn);
                     break;
+                case 5:
+                    menuManteniment(manteniment, sn);
+                    break;
                 case 6:
+                    infoRegistre();
+                    break;
+                case 0:
                     salir=true;
                     break;
             }
@@ -50,14 +63,13 @@ public class main {
             System.out.println("3.Inserir");
             System.out.println("4.Actualitzar");
             System.out.println("5.Esborrar per dni");
-            System.out.println("6.Tornar al menú principal");
+            System.out.println("0.Tornar al menú principal");
             System.out.print("Escriu una de les opcions --> ");
 
             opcionMenu=sn.nextInt();
             switch (opcionMenu){
                 case 1:
                     System.out.print("\n-------------------MOSTRAR DADES-------------------\n");
-                    System.out.println("Mostrant totes les dades...");
                     client.mostrarTots();
                     break;
                 case 2:
@@ -119,7 +131,7 @@ public class main {
                     System.out.println("Esborrant client...");
                     client.eliminarClient(dniEsborrar);
                     break;
-                case 6:
+                case 0:
                     salir=true;
                     break;
                 default:
@@ -141,7 +153,7 @@ public class main {
             System.out.println("3.Inserir");
             System.out.println("4.Actualitzar");
             System.out.println("5.Esborrar per matricula");
-            System.out.println("6.Tornar al menú principal");
+            System.out.println("0.Tornar al menú principal");
             System.out.print("Escriu una de les opcions --> ");
 
             opcionMenu=sn.nextInt();
@@ -211,7 +223,7 @@ public class main {
                     System.out.println("Esborrant cotxe...");
                     cotxe.eliminarCotxe(matriculaEsborrar);
                     break;
-                case 6:
+                case 0:
                     salir=true;
                     break;
                 default:
@@ -232,14 +244,13 @@ public class main {
             System.out.println("3.Inserir");
             System.out.println("4.Actualitzar");
             System.out.println("5.Esborrar per dni");
-            System.out.println("6.Tornar al menú principal");
+            System.out.println("0.Tornar al menú principal");
             System.out.print("Escriu una de les opcions --> ");
 
             opcionMenu=sn.nextInt();
             switch (opcionMenu){
                 case 1:
                     System.out.print("\n-------------------MOSTRAR DADES-------------------\n");
-                    System.out.println("Mostrant totes les dades...");
                     mecanic.mostrarTots();
                     break;
                 case 2:
@@ -309,7 +320,7 @@ public class main {
                     System.out.println("Esborrant mecànic...");
                     mecanic.eliminarMecanic(dniEsborrar);
                     break;
-                case 6:
+                case 0:
                     salir=true;
                     break;
                 default:
@@ -331,7 +342,7 @@ public class main {
             System.out.println("3.Inserir un nou lloguer");
             System.out.println("4.Actualitzar un lloguer per la matricula del cotxe");
             System.out.println("5.Esborrar per matricula");
-            System.out.println("6.Tornar al menú principal");
+            System.out.println("0.Tornar al menú principal");
             System.out.print("Escriu una de les opcions --> ");
 
             opcionMenu=sn.nextInt();
@@ -428,13 +439,121 @@ public class main {
                     System.out.println("Esborrant cotxe...");
                     lloguer.eliminarLloguer(matriculaEsborrar);
                     break;
-                case 6:
+                case 0:
                     salir=true;
                     break;
                 default:
                     System.out.println("Únicament nombres del 1 al 6");
             }
 
+        }
+    }
+
+    public static void menuManteniment(Manteniment manteniment, Scanner sn) {
+        sn.nextLine(); //refresca scanner
+        boolean salir = false;
+        int opcionMenu;
+        while(!salir){
+            System.out.println("----Benvingut a la secció de Manteniment, què vol fer?----");
+            System.out.println("1.Mostrar tots els registres de manteniment");
+            System.out.println("2.Mostrar per dni de Mecànic");
+            System.out.println("3.Inserir registre manteniment");
+            System.out.println("4.Actualitzar registre");
+            System.out.println("5.Esborrar per matricula cotxe");
+            System.out.println("0.Tornar al menú principal");
+            System.out.print("Escriu una de les opcions --> ");
+
+            opcionMenu=sn.nextInt();
+            switch (opcionMenu){
+                case 1:
+                    System.out.print("\n-------------------MOSTRAR DADES-------------------\n");
+                    manteniment.mostrarTots();
+                    break;
+                case 2:
+                    System.out.print("\n-------------------MOSTRAR PER DNI-------------------\n");
+                    String dni;
+                    System.out.print("Introdueix el dni del mecanic que vols buscar: ");
+                    dni=sn.next();
+                    manteniment.mostrarManteniment(dni);
+                    break;
+                case 3:
+                    //String dni, String matricula, String dataInici, String dataFi)
+                    System.out.print("\n-------------------INSERIR-------------------\n");
+                    String dniInsertar,matricula,dataInici,dataFi;
+                    System.out.println("Introdueix les dades del mecànic a crear ");
+                    sn.nextLine(); //refresca el scanner
+                    System.out.print("DNI Mecànic: "); dniInsertar=sn.nextLine();
+                    System.out.print("Matrícula Cotxe: "); matricula=sn.nextLine();
+                    System.out.print("Data Inici Manteniment (dd-mm-yyyy): "); dataInici=sn.nextLine();
+                    System.out.print("Data Fi Manteniment (dd-mm-yyyy): "); dataFi=sn.nextLine();
+                    System.out.println("Inserint el registre.....");
+                    manteniment.inserirManteniment(dniInsertar,matricula, dataInici, dataFi);
+                    break;
+                case 4:
+                    System.out.print("\n-------------------ACTUALITZAR-------------------\n");
+                    String [] columnas = new String[]{"dniMecanic","matricula","dataInici","dataFi"};
+                    Map<String,String> modificarColumnas = new TreeMap<>();
+                    String matriculaModificar;
+                    sn.nextLine(); //refresca scanner
+                    for(String columna :columnas){
+                        String clave;
+                        String valor;
+                        System.out.print("Vols modificar "+columna+"? (s/n) ");
+                        clave=sn.nextLine();
+                        if (clave.equalsIgnoreCase("s")){
+                            System.out.print("Quin nou valor per "+columna+"? ");
+                            if(columna.equalsIgnoreCase("dataInici")||columna.equalsIgnoreCase("dataFi")){
+                                System.out.print(" (dd-mm-yyyy)");
+                            }
+                            valor=sn.nextLine();
+                            modificarColumnas.put(columna, valor);
+                        }
+                    }
+                    System.out.print("Posa la matrícula del cotxe pel registre que vols modificar: ");
+                    matriculaModificar=sn.next();
+                    manteniment.modificarManteniment(modificarColumnas,matriculaModificar);
+                    System.out.println("Actualizar...");
+                    break;
+                case 5:
+                    System.out.print("\n-------------------ESBORRAR-------------------\n");
+                    String matriculaEsborrar;
+                    System.out.print("Introdueix matricula del cotxe que vols esborrar: ");
+                    matriculaEsborrar=sn.next();
+                    System.out.println("Esborrant registre...");
+                    manteniment.eliminarManteniment(matriculaEsborrar);
+                    break;
+                case 0:
+                    salir=true;
+                    break;
+                default:
+                    System.out.println("Únicament nombres del 1 al 6");
+            }
+
+        }
+
+    }
+
+    public static void infoRegistre(){
+        try{
+            String miDriver="com.mysql.cj.jdbc.Driver";
+            String miUrl = "jdbc:mysql://localhost/carsRental";
+            Class.forName(miDriver);
+            Connection conexion = DriverManager.getConnection(miUrl, "root", "admin");
+            Statement sentencia = conexion.createStatement();
+            ResultSet resul = sentencia.executeQuery("select matricula, c.dni, nomCognom, telefon, dies from clients c, lloguer l where l.dni = c.dni;");
+            while(resul.next()){
+                System.out.println("-----------------------------------------------\n");
+                System.out.println("Matricula: "+resul.getString("matricula"));
+                System.out.println("Dni Client: "+resul.getString("dni"));
+                System.out.println("Nom i cognom Client: "+resul.getString("nomCognom"));
+                System.out.println("Telèfon: "+resul.getString("telefon"));
+                System.out.println("Dies de lloguer: "+resul.getString("dies"));
+                System.out.println("-----------------------------------------------\n");
+            }
+
+        }catch (Exception e){
+            System.err.println("Ha habido una exception!");
+            System.err.println(e.getMessage());
         }
     }
 }

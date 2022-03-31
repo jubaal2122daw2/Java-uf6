@@ -145,7 +145,7 @@ public class Mecanics {
             String miUrl = "jdbc:mysql://localhost/carsRental";
             Class.forName(miDriver);
             Connection conexion = DriverManager.getConnection(miUrl, "root", "admin");
-            String query = "DELETE FROM Cotxes WHERE dniMecanic = ?;";
+            String query = "DELETE FROM Mecanics WHERE dniMecanic = ?;";
             PreparedStatement preparedStmt = conexion.prepareStatement(query);
             preparedStmt.setString(1, dniMecanic);
             preparedStmt.executeUpdate();

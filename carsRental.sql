@@ -51,7 +51,7 @@ create table Lloguer(
     PRIMARY KEY (dni,matricula)
 );
 INSERT INTO Lloguer values("46465746W", "1234ABC", 7, 10.50,"Estocolmo",1,"Con Franquicia");
-select matricula, c.dni, nomCognom, telefon from clients c, lloguer l where l.dni = c.dni; /*PARA LA CONSULTA DE SACAR LOS QUE ESTAN ALQUILADOS Y EL DNI.*/
+select matricula, c.dni, nomCognom, telefon, dies from clients c, lloguer l where l.dni = c.dni; /*PARA LA CONSULTA DE SACAR LOS QUE ESTAN ALQUILADOS Y EL DNI.*/
 select * from lloguer;
 select * from cotxes;
 select dni from clients;
@@ -81,3 +81,10 @@ create table Manteniment(
     FOREIGN KEY (matricula) REFERENCES Cotxes(matricula)  on update cascade on delete cascade,
     PRIMARY KEY (dniMecanic,matricula)
 );
+INSERT INTO Manteniment values("000", "1234ABC", str_to_date('12-12-2021', '%d-%m-%Y'), str_to_date('1-01-2022', '%d-%m-%Y'));
+select * from mecanics;
+select * from manteniment;
+select * from lloguer;
+select * from cotxes;
+
+delete from manteniment where dniMecanic = "000"; 
