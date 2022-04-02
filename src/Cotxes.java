@@ -3,7 +3,77 @@ import java.util.ArrayList;
 import java.util.Map;
 
 public class Cotxes {
-    public void mostrarTots(){
+
+    private String matricula;
+    private int numBastidor;
+    private String marca;
+    private String model;
+    private String color;
+    private int places;
+    private int numPortes;
+    private double maleter;
+    private String tCombustible;
+
+    /*CONSTRUCTORES*/
+
+    public Cotxes() {
+    }
+
+    public Cotxes(String matricula) {
+        this.matricula = matricula;
+    }
+
+    public Cotxes(String matricula, int numBastidor, String marca, String model, String color, int places, int numPortes, double maleter, String tCombustible) {
+        this.matricula = matricula;
+        this.numBastidor = numBastidor;
+        this.marca = marca;
+        this.model = model;
+        this.color = color;
+        this.places = places;
+        this.numPortes = numPortes;
+        this.maleter = maleter;
+        this.tCombustible = tCombustible;
+    }
+
+    /*GETTER*/
+
+    public String getMatricula() {
+        return matricula;
+    }
+
+    public int getNumBastidor() {
+        return numBastidor;
+    }
+
+    public String getMarca() {
+        return marca;
+    }
+
+    public String getModel() {
+        return model;
+    }
+
+    public String getColor() {
+        return color;
+    }
+
+    public int getPlaces() {
+        return places;
+    }
+
+    public int getNumPortes() {
+        return numPortes;
+    }
+
+    public double getMaleter() {
+        return maleter;
+    }
+
+    public String gettCombustible() {
+        return tCombustible;
+    }
+
+    public static void mostrarTots(){
         try{
             String miDriver="com.mysql.cj.jdbc.Driver";
             String miUrl = "jdbc:mysql://localhost/carsRental";

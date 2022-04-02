@@ -3,7 +3,50 @@ import java.util.ArrayList;
 import java.util.Map;
 
 public class Mecanics {
-    public void mostrarTots(){
+    private String dniMecanic;
+    private String nomCognomM;
+    private String edatM;
+    private String telM;
+    private String adrecaM;
+    private String ciutatM;
+    private String paisM;
+    private String emailM;
+    private String permisConduccioM;
+    private String puntsM;
+    private String salari;
+    private String seguretatSocial;
+    private String titulacio;
+    private String anysEmp;
+
+    /*CONSTRUCTORES*/
+
+    public Mecanics() {
+    }
+
+    public Mecanics(String dniMecanic, String nomCognomM, String edatM, String telM, String adrecaM, String ciutatM, String paisM, String emailM, String permisConduccioM, String puntsM, String salari, String seguretatSocial, String titulacio, String anysEmp) {
+        this.dniMecanic = dniMecanic;
+        this.nomCognomM = nomCognomM;
+        this.edatM = edatM;
+        this.telM = telM;
+        this.adrecaM = adrecaM;
+        this.ciutatM = ciutatM;
+        this.paisM = paisM;
+        this.emailM = emailM;
+        this.permisConduccioM = permisConduccioM;
+        this.puntsM = puntsM;
+        this.salari = salari;
+        this.seguretatSocial = seguretatSocial;
+        this.titulacio = titulacio;
+        this.anysEmp = anysEmp;
+    }
+
+    public Mecanics(String dniMecanic) {
+        this.dniMecanic = dniMecanic;
+    }
+
+    /*GETTER*/
+
+    public static void mostrarTots(){
         try{
             String miDriver="com.mysql.cj.jdbc.Driver";
             String miUrl = "jdbc:mysql://localhost/carsRental";

@@ -7,10 +7,12 @@ import java.util.*;
 public class main {
     public static void main(String[] args) {
         //Clients client = new Clients();
-        Cotxes cotxe = new Cotxes();
+        //Cotxes cotxe = new Cotxes();
         Mecanics mecanic = new Mecanics();
+
         Lloguers lloguer = new Lloguers();
         Manteniment manteniment = new Manteniment();
+        Connexio connexio = new Connexio("com.mysql.cj.jdbc.Driver","jdbc:mysql://localhost/carsRental");
 
         Scanner sn = new Scanner(System.in);
         boolean salir = false;
@@ -29,13 +31,13 @@ public class main {
             opcion=sn.nextInt();
             switch (opcion){
                 case 1:
-                    menuClient(sn);
+                    menuClient(connexio, sn);
                     break;
                 case 2:
-                    menuCotxes(cotxe,sn);
+                    menuCotxes(sn);
                     break;
                 case 3:
-                    menuMecanics(mecanic, sn);
+                    menuMecanics(mecanic,sn);
                     break;
                 case 4:
                     menuLloguers(lloguer, sn);
@@ -52,7 +54,7 @@ public class main {
             }
         }
     }
-    public static void menuClient(Scanner sn) {
+    public static void menuClient(Connexio connexio, Scanner sn) {
         sn.nextLine(); //refresca scanner
         boolean salir = false;
         int opcionMenu;
@@ -70,7 +72,7 @@ public class main {
             switch (opcionMenu){
                 case 1:
                     System.out.print("\n-------------------MOSTRAR DADES-------------------\n");
-                    Clients.mostrarTots();
+                    Clients.mostrarTots(connexio);
                     break;
                 case 2:
                     System.out.print("\n-------------------MOSTRAR PER DNI-------------------\n");
@@ -79,7 +81,7 @@ public class main {
                     dniC=sn.next();
                     Clients c = new Clients(dniC);
                     System.out.println("Mostrar client pel dni...");
-                    c.mostrarClient(c.getDni());
+                    c.mostrarClient(connexio, c.getDni());
                     break;
                 case 3:
                     System.out.print("\n-------------------INSERIR-------------------\n");
@@ -100,8 +102,8 @@ public class main {
                     System.out.print("Punts: "); punts=sn.nextInt();
                     sn.nextLine();
                     System.out.println("Inserint el client.....");
-                    Clients c1 = new Clients(dniInsertar,nom, edat, tel, adreca, ciutat, pais, email, permis, punts);
-                    c1.inserirClient(c1.getDni(),c1.getNomCognom(), c1.getEdat(), c1.getTelefon(), c1.getAdreca(), c1.getCiutat(), c1.getPais(), c1.getEmail(), c1.getPermisConduccio(), c1.getPunts());
+                    Clients c1 = new Clients(nom, dniInsertar, edat, tel, adreca, ciutat, pais, email, permis, punts);
+                    c1.inserirClient(connexio,c1.getDni(),c1.getNomCognom(), c1.getEdat(), c1.getTelefon(), c1.getAdreca(), c1.getCiutat(), c1.getPais(), c1.getEmail(), c1.getPermisConduccio(), c1.getPunts());
                     break;
                 case 4:
                     System.out.print("\n-------------------ACTUALITZAR-------------------\n");
@@ -123,7 +125,7 @@ public class main {
                     System.out.print("Posa el dni del client que vols modificar: ");
                     dniModificar=sn.next();
                     Clients c3 = new Clients();
-                    c3.modificarCliente(modificarColumnas,dniModificar);
+                    c3.modificarCliente(connexio,modificarColumnas,dniModificar);
                     System.out.println("Actualizar...");
                     break;
                 case 5:
@@ -133,7 +135,7 @@ public class main {
                     dniEsborrar=sn.next();
                     System.out.println("Esborrant client...");
                     Clients c2 = new Clients(dniEsborrar);
-                    c2.eliminarClient(c2.getDni());
+                    c2.eliminarClient(connexio,c2.getDni());
                     break;
                 case 0:
                     salir=true;
@@ -146,7 +148,7 @@ public class main {
 
     }
 
-    public static void menuCotxes(Cotxes cotxe, Scanner sn){
+    public static void menuCotxes(Scanner sn){
         sn.nextLine(); //refresca scanner
         boolean salir = false;
         int opcionMenu;
@@ -164,7 +166,7 @@ public class main {
             switch (opcionMenu){
                 case 1:
                     System.out.print("\n-------------------MOSTRAR DADES-------------------\n");
-                    cotxe.mostrarTots();
+                    Cotxes.mostrarTots();
                     break;
                 case 2:
                     System.out.print("\n-------------------MOSTRAR DADES PER MATRICULA-------------------\n");
@@ -172,7 +174,8 @@ public class main {
                     System.out.print("Introdueix la matricula del cotxe que vols buscar: ");
                     matricula=sn.next();
                     System.out.println("Mostrar cotxe per la matricula...");
-                    cotxe.mostrarCotxes(matricula);
+                    Cotxes c = new Cotxes(matricula);
+                    c.mostrarCotxes(c.getMatricula());
                     break;
                 case 3:
                     System.out.print("\n-------------------INSERIR-------------------\n");
@@ -195,7 +198,8 @@ public class main {
                     sn.nextLine();
                     System.out.print("Tipus de Combustible: "); tCombustible=sn.nextLine();
                     System.out.println("Inserint el cotxe.....");
-                    cotxe.inserirCotxe(matriculaInsertar,numBastidor, marca, model, color, places, numPortes, maleter, tCombustible);
+                    Cotxes c1 = new Cotxes(matriculaInsertar, numBastidor, marca, model, color, places, numPortes, maleter, tCombustible);
+                    c1.inserirCotxe(c1.getMatricula(),c1.getNumBastidor(), c1.getMarca(), c1.getModel(), c1.getColor(), c1.getPlaces(), c1.getNumPortes(), c1.getMaleter(), c1.gettCombustible());
                     break;
                 case 4:
                     System.out.print("\n-------------------ACTUALITZAR-------------------\n");
@@ -216,7 +220,8 @@ public class main {
                     }
                     System.out.print("Posa la matricula del cotxe que vols modificar: ");
                     matriculaModificar=sn.next();
-                    cotxe.modificarCotxe(modificarColumnas,matriculaModificar);
+                    Cotxes c2 = new Cotxes(matriculaModificar);
+                    c2.modificarCotxe(modificarColumnas,matriculaModificar);
                     System.out.println("Actualitzant...");
                     break;
                 case 5:
@@ -225,7 +230,8 @@ public class main {
                     System.out.print("Introdueix la matricula del cotxe que vols esborrar: ");
                     matriculaEsborrar=sn.next();
                     System.out.println("Esborrant cotxe...");
-                    cotxe.eliminarCotxe(matriculaEsborrar);
+                    Cotxes c3 = new Cotxes(matriculaEsborrar);
+                    c3.eliminarCotxe(c3.getMatricula());
                     break;
                 case 0:
                     salir=true;
@@ -255,7 +261,8 @@ public class main {
             switch (opcionMenu){
                 case 1:
                     System.out.print("\n-------------------MOSTRAR DADES-------------------\n");
-                    mecanic.mostrarTots();
+                    Mecanics.mostrarTots();
+
                     break;
                 case 2:
                     System.out.print("\n-------------------MOSTRAR PER DNI-------------------\n");

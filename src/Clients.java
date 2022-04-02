@@ -77,13 +77,9 @@ public class Clients {
         return punts;
     }
 
-    public static void mostrarTots(){
+    public static void mostrarTots(Connexio connexio){
         try{
-            String miDriver="com.mysql.cj.jdbc.Driver";
-            String miUrl = "jdbc:mysql://localhost/carsRental";
-            Class.forName(miDriver);
-            Connection conexion = DriverManager.getConnection(miUrl, "root", "admin");
-            Statement sentencia = conexion.createStatement();
+            Statement sentencia = connexio.getConexion().createStatement();
             ResultSet resul = sentencia.executeQuery("SELECT * FROM Clients;");
             while(resul.next()){
                 System.out.println("Nom i cognom: "+resul.getString("nomCognom"));
@@ -104,14 +100,10 @@ public class Clients {
         }
 
     }
-    public void mostrarClient(String dni){
+    public void mostrarClient(Connexio connexio, String dni){
         try{
-            String miDriver="com.mysql.cj.jdbc.Driver";
-            String miUrl = "jdbc:mysql://localhost/carsRental";
-            Class.forName(miDriver);
-            Connection conexion = DriverManager.getConnection(miUrl, "root", "admin");
             String query = "SELECT * FROM Clients WHERE dni = ?";
-            PreparedStatement preparedStmt = conexion.prepareStatement(query);
+            PreparedStatement preparedStmt = connexio.getConexion().prepareStatement(query);
             preparedStmt.setString(1, dni);
             ResultSet resul = preparedStmt.executeQuery();
             while(resul.next()){
@@ -135,14 +127,10 @@ public class Clients {
         }
 
     }
-    public void inserirClient(String dni, String nomCognom,int edat, String telefon, String adreca, String ciutat, String pais, String email, String permisConduccio, int punts){
+    public void inserirClient(Connexio connexio, String dni, String nomCognom,int edat, String telefon, String adreca, String ciutat, String pais, String email, String permisConduccio, int punts){
         try{
-            String miDriver="com.mysql.cj.jdbc.Driver";
-            String miUrl = "jdbc:mysql://localhost/carsRental";
-            Class.forName(miDriver);
-            Connection conexion = DriverManager.getConnection(miUrl, "root", "admin");
             String query = "INSERT INTO CLIENTS (dni, nomCognom, edat, telefon, adreca, ciutat, pais, email, permisConduccio, punts) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
-            PreparedStatement preparedStmt = conexion.prepareStatement(query);
+            PreparedStatement preparedStmt = connexio.getConexion().prepareStatement(query);
             preparedStmt.setString(1, dni);
             preparedStmt.setString(2, nomCognom);
             preparedStmt.setInt(3, edat);
@@ -160,15 +148,11 @@ public class Clients {
         }
 
     }
-    public void modificarCliente(Map<String,String> map, String dniCliente){
+    public void modificarCliente(Connexio connexio, Map<String,String> map, String dniCliente){
         try{
             String query = "UPDATE Clients SET ";
             ArrayList<String> claves = new ArrayList<String>();
             ArrayList<String> valores = new ArrayList<String>();
-            String miDriver="com.mysql.cj.jdbc.Driver";
-            String miUrl = "jdbc:mysql://localhost/carsRental";
-            Class.forName(miDriver);
-            Connection conexion = DriverManager.getConnection(miUrl, "root", "admin");
 
             for (String key : map.keySet()) {
                 claves.add(key);
@@ -183,7 +167,7 @@ public class Clients {
                 }
             }
             System.out.println(query);
-            PreparedStatement preparedStmt = conexion.prepareStatement(query);
+            PreparedStatement preparedStmt = connexio.getConexion().prepareStatement(query);
             for(int i=0, j=0 ;i < claves.size() && j < valores.size(); i++,j++){
                 if(claves.get(i)=="edat" || claves.get(i)=="punts"){
                     int valorParseado = Integer.parseInt(valores.get(j));
@@ -200,14 +184,10 @@ public class Clients {
             System.err.println(e.getMessage());
         }
     }
-    public void eliminarClient(String dni){
+    public void eliminarClient(Connexio connexio,String dni){
         try{
-            String miDriver="com.mysql.cj.jdbc.Driver";
-            String miUrl = "jdbc:mysql://localhost/carsRental";
-            Class.forName(miDriver);
-            Connection conexion = DriverManager.getConnection(miUrl, "root", "admin");
             String query = "DELETE FROM Clients WHERE dni = ?;";
-            PreparedStatement preparedStmt = conexion.prepareStatement(query);
+            PreparedStatement preparedStmt = connexio.getConexion().prepareStatement(query);
             preparedStmt.setString(1, dni);
             preparedStmt.executeUpdate();
         }catch (Exception e){
