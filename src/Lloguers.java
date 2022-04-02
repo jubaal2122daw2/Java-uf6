@@ -3,13 +3,65 @@ import java.util.ArrayList;
 import java.util.Map;
 
 public class Lloguers {
-    public void mostrarTots(){
+    private String dni;
+    private String matricula;
+    private int dies;
+    private double preu;
+    private String llocDevolucio;
+    private boolean depositPle;
+    private String tAsseguranca;
+
+    /*CONSTRUCTORS*/
+    public Lloguers() {
+    }
+
+    public Lloguers(String matricula) {
+        this.matricula = matricula;
+    }
+
+    public Lloguers(String dni, String matricula, int dies, double preu, String llocDevolucio, boolean depositPle, String tAsseguranca) {
+        this.dni = dni;
+        this.matricula = matricula;
+        this.dies = dies;
+        this.preu = preu;
+        this.llocDevolucio = llocDevolucio;
+        this.depositPle = depositPle;
+        this.tAsseguranca = tAsseguranca;
+    }
+
+    /*GETTER*/
+
+    public String getDni() {
+        return dni;
+    }
+
+    public String getMatricula() {
+        return matricula;
+    }
+
+    public int getDies() {
+        return dies;
+    }
+
+    public double getPreu() {
+        return preu;
+    }
+
+    public String getLlocDevolucio() {
+        return llocDevolucio;
+    }
+
+    public boolean isDepositPle() {
+        return depositPle;
+    }
+
+    public String gettAsseguranca() {
+        return tAsseguranca;
+    }
+
+    public static void mostrarTots(Connexio connexio){
         try{
-            String miDriver="com.mysql.cj.jdbc.Driver";
-            String miUrl = "jdbc:mysql://localhost/carsRental";
-            Class.forName(miDriver);
-            Connection conexion = DriverManager.getConnection(miUrl, "root", "admin");
-            Statement sentencia = conexion.createStatement();
+            Statement sentencia = connexio.getConexion().createStatement();
             ResultSet resul = sentencia.executeQuery("SELECT * FROM Lloguer;");
             while(resul.next()){
                 String canviBoolean = "";
@@ -33,15 +85,11 @@ public class Lloguers {
         }
 
     }
-    public void mostrarLloguers(String valor){
+    public void mostrarLloguers(Connexio connexio, String valor){
         try{
-            String miDriver="com.mysql.cj.jdbc.Driver";
-            String miUrl = "jdbc:mysql://localhost/carsRental";
             String canviBoolean = "";
-            Class.forName(miDriver);
-            Connection conexion = DriverManager.getConnection(miUrl, "root", "admin");
             String query = "SELECT * FROM Lloguer WHERE dni = ? or matricula= ?";
-            PreparedStatement preparedStmt = conexion.prepareStatement(query);
+            PreparedStatement preparedStmt = connexio.getConexion().prepareStatement(query);
             preparedStmt.setString(1, valor);
             preparedStmt.setString(2, valor);
             ResultSet resul = preparedStmt.executeQuery();
@@ -66,14 +114,10 @@ public class Lloguers {
         }
     }
 
-    public void inserirLloguer(String dni, String matricula, int dies, double preu, String llocDevolucio, boolean depositPle, String tAsseguranca){
+    public void inserirLloguer(Connexio connexio, String dni, String matricula, int dies, double preu, String llocDevolucio, boolean depositPle, String tAsseguranca){
         try{
-            String miDriver="com.mysql.cj.jdbc.Driver";
-            String miUrl = "jdbc:mysql://localhost/carsRental";
-            Class.forName(miDriver);
-            Connection conexion = DriverManager.getConnection(miUrl, "root", "admin");
             String query = "INSERT INTO LLOGUER (dni, matricula, dies, preu, llocDevolucio, depositPle, tAsseguranca) values (?, ?, ?, ?, ?, ?, ?);";
-            PreparedStatement preparedStmt = conexion.prepareStatement(query);
+            PreparedStatement preparedStmt = connexio.getConexion().prepareStatement(query);
             preparedStmt.setString(1, dni);
             preparedStmt.setString(2, matricula);
             preparedStmt.setInt(3, dies);
@@ -88,15 +132,11 @@ public class Lloguers {
         }
 
     }
-    public void modificarLloguer(Map<String,String> map, String dni){
+    public void modificarLloguer(Connexio connexio, Map<String,String> map, String dni){
         try{
             String query = "UPDATE Lloguer SET ";
             ArrayList<String> claves = new ArrayList<String>();
             ArrayList<String> valores = new ArrayList<String>();
-            String miDriver="com.mysql.cj.jdbc.Driver";
-            String miUrl = "jdbc:mysql://localhost/carsRental";
-            Class.forName(miDriver);
-            Connection conexion = DriverManager.getConnection(miUrl, "root", "admin");
 
             for (String key : map.keySet()) {
                 claves.add(key);
@@ -110,8 +150,8 @@ public class Lloguers {
                     query = query + c + " = ? WHERE matricula = ?;";
                 }
             }
-            System.out.println(query);
-            PreparedStatement preparedStmt = conexion.prepareStatement(query);
+            //System.out.println(query);
+            PreparedStatement preparedStmt = connexio.getConexion().prepareStatement(query);
             for(int i=0, j=0 ;i < claves.size() && j < valores.size(); i++,j++){
                 if(claves.get(i)=="dies"){
                     int valorParseado = Integer.parseInt(valores.get(j));
@@ -134,14 +174,10 @@ public class Lloguers {
             System.err.println(e.getMessage());
         }
     }
-    public void eliminarLloguer(String matricula){
+    public void eliminarLloguer(Connexio connexio, String matricula){
         try{
-            String miDriver="com.mysql.cj.jdbc.Driver";
-            String miUrl = "jdbc:mysql://localhost/carsRental";
-            Class.forName(miDriver);
-            Connection conexion = DriverManager.getConnection(miUrl, "root", "admin");
             String query = "DELETE FROM Lloguer WHERE matricula = ?;";
-            PreparedStatement preparedStmt = conexion.prepareStatement(query);
+            PreparedStatement preparedStmt = connexio.getConexion().prepareStatement(query);
             preparedStmt.setString(1, matricula);
             preparedStmt.executeUpdate();
         }catch (Exception e){

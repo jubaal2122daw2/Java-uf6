@@ -23,4 +23,13 @@ public class Connexio {
     public Connection getConexion() {
         return conexion;
     }
+
+    /*EJEMPLO DE COMO SERIA UNA CONEXION SIN CLASES
+
+      String miDriver="com.mysql.cj.jdbc.Driver";
+      String miUrl = "jdbc:mysql://localhost/carsRental";
+      Class.forName(miDriver);
+      Connection conexion = DriverManager.getConnection(miUrl, "root", "admin");
+      Statement sentencia = conexion.createStatement();
+      ResultSet resul = sentencia.executeQuery("SELECT * FROM Mecanics;");*/
 }

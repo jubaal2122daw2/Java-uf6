@@ -5,25 +5,25 @@ import java.util.Map;
 public class Mecanics {
     private String dniMecanic;
     private String nomCognomM;
-    private String edatM;
+    private int edatM;
     private String telM;
     private String adrecaM;
     private String ciutatM;
     private String paisM;
     private String emailM;
     private String permisConduccioM;
-    private String puntsM;
-    private String salari;
-    private String seguretatSocial;
+    private int puntsM;
+    private double salari;
+    private int seguretatSocial;
     private String titulacio;
-    private String anysEmp;
+    private int anysEmp;
 
     /*CONSTRUCTORES*/
 
     public Mecanics() {
     }
 
-    public Mecanics(String dniMecanic, String nomCognomM, String edatM, String telM, String adrecaM, String ciutatM, String paisM, String emailM, String permisConduccioM, String puntsM, String salari, String seguretatSocial, String titulacio, String anysEmp) {
+    public Mecanics(String dniMecanic, String nomCognomM, int edatM, String telM, String adrecaM, String ciutatM, String paisM, String emailM, String permisConduccioM, int puntsM, double salari, int seguretatSocial, String titulacio, int anysEmp) {
         this.dniMecanic = dniMecanic;
         this.nomCognomM = nomCognomM;
         this.edatM = edatM;
@@ -46,13 +46,65 @@ public class Mecanics {
 
     /*GETTER*/
 
-    public static void mostrarTots(){
+    public String getDniMecanic() {
+        return dniMecanic;
+    }
+
+    public String getNomCognomM() {
+        return nomCognomM;
+    }
+
+    public int getEdatM() {
+        return edatM;
+    }
+
+    public String getTelM() {
+        return telM;
+    }
+
+    public String getAdrecaM() {
+        return adrecaM;
+    }
+
+    public String getCiutatM() {
+        return ciutatM;
+    }
+
+    public String getPaisM() {
+        return paisM;
+    }
+
+    public String getEmailM() {
+        return emailM;
+    }
+
+    public String getPermisConduccioM() {
+        return permisConduccioM;
+    }
+
+    public int getPuntsM() {
+        return puntsM;
+    }
+
+    public double getSalari() {
+        return salari;
+    }
+
+    public int getSeguretatSocial() {
+        return seguretatSocial;
+    }
+
+    public String getTitulacio() {
+        return titulacio;
+    }
+
+    public int getAnysEmp() {
+        return anysEmp;
+    }
+
+    public static void mostrarTots(Connexio connexio){
         try{
-            String miDriver="com.mysql.cj.jdbc.Driver";
-            String miUrl = "jdbc:mysql://localhost/carsRental";
-            Class.forName(miDriver);
-            Connection conexion = DriverManager.getConnection(miUrl, "root", "admin");
-            Statement sentencia = conexion.createStatement();
+            Statement sentencia = connexio.getConexion().createStatement();
             ResultSet resul = sentencia.executeQuery("SELECT * FROM Mecanics;");
             while(resul.next()){
                 System.out.println("Dni: "+resul.getString("dniMecanic"));
@@ -77,14 +129,10 @@ public class Mecanics {
         }
 
     }
-    public void mostrarMecanics(String dniMecanic){
+    public void mostrarMecanics(Connexio connexio,String dniMecanic){
         try{
-            String miDriver="com.mysql.cj.jdbc.Driver";
-            String miUrl = "jdbc:mysql://localhost/carsRental";
-            Class.forName(miDriver);
-            Connection conexion = DriverManager.getConnection(miUrl, "root", "admin");
             String query = "SELECT * FROM Mecanics WHERE dniMecanic = ?";
-            PreparedStatement preparedStmt = conexion.prepareStatement(query);
+            PreparedStatement preparedStmt = connexio.getConexion().prepareStatement(query);
             preparedStmt.setString(1, dniMecanic);
             ResultSet resul = preparedStmt.executeQuery();
             while(resul.next()){
@@ -110,14 +158,10 @@ public class Mecanics {
         }
     }
 
-    public void inserirMecanic(String dniMecanic, String nomCognomM, int edatM, String telM, String adrecaM, String ciutatM, String paisM, String emailM, String permisConduccioM, int puntsM, double salari, int seguretatSocial, String titulacio, int anysEmp){
+    public void inserirMecanic(Connexio connexio,String dniMecanic, String nomCognomM, int edatM, String telM, String adrecaM, String ciutatM, String paisM, String emailM, String permisConduccioM, int puntsM, double salari, int seguretatSocial, String titulacio, int anysEmp){
         try{
-            String miDriver="com.mysql.cj.jdbc.Driver";
-            String miUrl = "jdbc:mysql://localhost/carsRental";
-            Class.forName(miDriver);
-            Connection conexion = DriverManager.getConnection(miUrl, "root", "admin");
             String query = "INSERT INTO MECANICS (dniMecanic, nomCognomM, edatM, telM, adrecaM, ciutatM, paisM, emailM, permisConduccioM, puntsM, salari, seguretatSocial, titulacio, anysEmp) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
-            PreparedStatement preparedStmt = conexion.prepareStatement(query);
+            PreparedStatement preparedStmt = connexio.getConexion().prepareStatement(query);
             preparedStmt.setString(1, dniMecanic);
             preparedStmt.setString(2, nomCognomM);
             preparedStmt.setInt(3, edatM);
@@ -139,17 +183,12 @@ public class Mecanics {
         }
 
     }
-    public void modificarMecanic(Map<String,String> map, String dniMecanic){
+    public void modificarMecanic(Connexio connexio,Map<String,String> map, String dniMecanic){
         try{
             String query = "UPDATE Mecanics SET ";
             ArrayList<String> claves = new ArrayList<String>();
             ArrayList<String> valores = new ArrayList<String>();
-            String miDriver="com.mysql.cj.jdbc.Driver";
-            String miUrl = "jdbc:mysql://localhost/carsRental";
-            Class.forName(miDriver);
-            Connection conexion = DriverManager.getConnection(miUrl, "root", "admin");
-
-            for (String key : map.keySet()) {
+                        for (String key : map.keySet()) {
                 claves.add(key);
                 valores.add(map.get(key));
             }
@@ -162,7 +201,7 @@ public class Mecanics {
                 }
             }
             System.out.println(query);
-            PreparedStatement preparedStmt = conexion.prepareStatement(query);
+            PreparedStatement preparedStmt = connexio.getConexion().prepareStatement(query);
             for(int i=0, j=0 ;i < claves.size() && j < valores.size(); i++,j++){
                 if(claves.get(i)=="edatM" || claves.get(i)=="puntsM" || claves.get(i)=="seguretatSocial" || claves.get(i)=="anysEmp"){
                     int valorParseado = Integer.parseInt(valores.get(j));
@@ -182,14 +221,10 @@ public class Mecanics {
             System.err.println(e.getMessage());
         }
     }
-    public void eliminarMecanic(String dniMecanic){
+    public void eliminarMecanic(Connexio connexio,String dniMecanic){
         try{
-            String miDriver="com.mysql.cj.jdbc.Driver";
-            String miUrl = "jdbc:mysql://localhost/carsRental";
-            Class.forName(miDriver);
-            Connection conexion = DriverManager.getConnection(miUrl, "root", "admin");
             String query = "DELETE FROM Mecanics WHERE dniMecanic = ?;";
-            PreparedStatement preparedStmt = conexion.prepareStatement(query);
+            PreparedStatement preparedStmt = connexio.getConexion().prepareStatement(query);
             preparedStmt.setString(1, dniMecanic);
             preparedStmt.executeUpdate();
         }catch (Exception e){
