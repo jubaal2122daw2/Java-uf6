@@ -534,12 +534,14 @@ public class main {
                     break;
                 case 5:
                     System.out.print("\n-------------------ESBORRAR-------------------\n");
-                    String matriculaEsborrar;
+                    String matriculaEsborrar, dniEsborrar;
                     System.out.print("Introdueix matricula del cotxe que vols esborrar: ");
                     matriculaEsborrar=sn.next();
+                    System.out.print("Posa el dni del mecànic pel registre que vols esborrar: ");
+                    dniEsborrar=sn.next();
                     System.out.println("Esborrant registre...");
-                    Manteniment ma4 = new Manteniment(matriculaEsborrar);
-                    ma4.eliminarManteniment(connexio, ma4.getMatricula());
+                    Manteniment ma4 = new Manteniment(dniEsborrar, matriculaEsborrar);
+                    ma4.eliminarManteniment(connexio, ma4.getMatricula(), ma4.getDniMecanic());
                     break;
                 case 0:
                     salir=true;

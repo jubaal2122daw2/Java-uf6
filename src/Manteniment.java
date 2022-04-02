@@ -141,11 +141,12 @@ public class Manteniment {
             System.err.println(e.getMessage());
         }
     }
-    public void eliminarManteniment(Connexio connexio,String matricula){
+    public void eliminarManteniment(Connexio connexio,String matricula, String dni){
         try{
-            String query = "DELETE FROM Manteniment WHERE matricula = ?;";
+            String query = "DELETE FROM Manteniment WHERE matricula = ? and dniMecanic = ?;";
             PreparedStatement preparedStmt = connexio.getConexion().prepareStatement(query);
             preparedStmt.setString(1, matricula);
+            preparedStmt.setString(2, dni);
             preparedStmt.executeUpdate();
         }catch (Exception e){
             System.err.println("Ha habido una exception!");
