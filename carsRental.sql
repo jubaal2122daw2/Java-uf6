@@ -51,7 +51,7 @@ create table Lloguer(
     PRIMARY KEY (dni,matricula)
 );
 INSERT INTO Lloguer values("46465746W", "1234ABC", 7, 10.50,"Estocolmo",1,"Con Franquicia");
-select matricula, c.dni, nomCognom, telefon, dies from clients c, lloguer l where l.dni = c.dni; /*PARA LA CONSULTA DE SACAR LOS QUE ESTAN ALQUILADOS Y EL DNI.*/
+select matricula, c.dni, nomCognom, telefon, dies, preu from clients c, lloguer l where l.dni = c.dni; /*PARA LA CONSULTA DE SACAR LOS QUE ESTAN ALQUILADOS Y EL DNI.*/
 select * from lloguer;
 select * from cotxes;
 select dni from clients;

@@ -6,7 +6,7 @@ import java.util.*;
 
 public class main {
     public static void main(String[] args) {
-        Clients client = new Clients();
+        //Clients client = new Clients();
         Cotxes cotxe = new Cotxes();
         Mecanics mecanic = new Mecanics();
         Lloguers lloguer = new Lloguers();
@@ -29,7 +29,7 @@ public class main {
             opcion=sn.nextInt();
             switch (opcion){
                 case 1:
-                    menuClient(client, sn);
+                    menuClient(sn);
                     break;
                 case 2:
                     menuCotxes(cotxe,sn);
@@ -52,7 +52,7 @@ public class main {
             }
         }
     }
-    public static void menuClient(Clients client, Scanner sn) {
+    public static void menuClient(Scanner sn) {
         sn.nextLine(); //refresca scanner
         boolean salir = false;
         int opcionMenu;
@@ -70,15 +70,16 @@ public class main {
             switch (opcionMenu){
                 case 1:
                     System.out.print("\n-------------------MOSTRAR DADES-------------------\n");
-                    client.mostrarTots();
+                    Clients.mostrarTots();
                     break;
                 case 2:
                     System.out.print("\n-------------------MOSTRAR PER DNI-------------------\n");
-                    String dni;
+                    String dniC;
                     System.out.print("Introdueix el dni del client que vols buscar: ");
-                    dni=sn.next();
+                    dniC=sn.next();
+                    Clients c = new Clients(dniC);
                     System.out.println("Mostrar client pel dni...");
-                    client.mostrarClient(dni);
+                    c.mostrarClient(c.getDni());
                     break;
                 case 3:
                     System.out.print("\n-------------------INSERIR-------------------\n");
@@ -99,7 +100,8 @@ public class main {
                     System.out.print("Punts: "); punts=sn.nextInt();
                     sn.nextLine();
                     System.out.println("Inserint el client.....");
-                    client.inserirClient(dniInsertar,nom, edat, tel, adreca, ciutat, pais, email, permis, punts);
+                    Clients c1 = new Clients(dniInsertar,nom, edat, tel, adreca, ciutat, pais, email, permis, punts);
+                    c1.inserirClient(c1.getDni(),c1.getNomCognom(), c1.getEdat(), c1.getTelefon(), c1.getAdreca(), c1.getCiutat(), c1.getPais(), c1.getEmail(), c1.getPermisConduccio(), c1.getPunts());
                     break;
                 case 4:
                     System.out.print("\n-------------------ACTUALITZAR-------------------\n");
@@ -120,7 +122,8 @@ public class main {
                     }
                     System.out.print("Posa el dni del client que vols modificar: ");
                     dniModificar=sn.next();
-                    client.modificarCliente(modificarColumnas,dniModificar);
+                    Clients c3 = new Clients();
+                    c3.modificarCliente(modificarColumnas,dniModificar);
                     System.out.println("Actualizar...");
                     break;
                 case 5:
@@ -129,7 +132,8 @@ public class main {
                     System.out.print("Introdueix el dni del client que vols esborrar: ");
                     dniEsborrar=sn.next();
                     System.out.println("Esborrant client...");
-                    client.eliminarClient(dniEsborrar);
+                    Clients c2 = new Clients(dniEsborrar);
+                    c2.eliminarClient(c2.getDni());
                     break;
                 case 0:
                     salir=true;
@@ -540,7 +544,7 @@ public class main {
             Class.forName(miDriver);
             Connection conexion = DriverManager.getConnection(miUrl, "root", "admin");
             Statement sentencia = conexion.createStatement();
-            ResultSet resul = sentencia.executeQuery("select matricula, c.dni, nomCognom, telefon, dies from clients c, lloguer l where l.dni = c.dni;");
+            ResultSet resul = sentencia.executeQuery("select matricula, c.dni, nomCognom, telefon, dies, preu from clients c, lloguer l where l.dni = c.dni;");
             while(resul.next()){
                 System.out.println("-----------------------------------------------\n");
                 System.out.println("Matricula: "+resul.getString("matricula"));
@@ -548,6 +552,7 @@ public class main {
                 System.out.println("Nom i cognom Client: "+resul.getString("nomCognom"));
                 System.out.println("Telèfon: "+resul.getString("telefon"));
                 System.out.println("Dies de lloguer: "+resul.getString("dies"));
+                System.out.println("Preu per dia: "+resul.getString("preu"));
                 System.out.println("-----------------------------------------------\n");
             }
 
