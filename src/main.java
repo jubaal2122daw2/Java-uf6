@@ -1,20 +1,15 @@
-import java.awt.event.MouseWheelEvent;
-import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.*;
 
 public class main {
     public static void main(String[] args) {
-        Manteniment manteniment = new Manteniment();
         Connexio connexio = new Connexio("com.mysql.cj.jdbc.Driver","jdbc:mysql://localhost/carsRental");
-
         Scanner sn = new Scanner(System.in);
         boolean salir = false;
-        int opcion;
+        String opcion;
 
-        while(!salir){
+        while (!salir) {
             System.out.println("--------CARS RENTAL--------");
             System.out.println("1.Gestionar Clients");
             System.out.println("2.Gestionar Cotxes");
@@ -22,38 +17,46 @@ public class main {
             System.out.println("4.Gestionar Lloguers");
             System.out.println("5.Gestionar Manteniment");
             System.out.println("6.Veure el registre de lloguers");
+            System.out.println("7.Veure el estat de devolució dels lloguers");
             System.out.println("0.Salir");
             System.out.print("Escriu una de les opcions --> ");
-            opcion=sn.nextInt();
-            switch (opcion){
-                case 1:
+            opcion = sn.next();
+            switch (opcion) {
+                case "1":
                     menuClient(connexio, sn);
                     break;
-                case 2:
-                    menuCotxes(connexio,sn);
+                case "2":
+                    menuCotxes(connexio, sn);
                     break;
-                case 3:
-                    menuMecanics(connexio,sn);
+                case "3":
+                    menuMecanics(connexio, sn);
                     break;
-                case 4:
+                case "4":
                     menuLloguers(connexio, sn);
                     break;
-                case 5:
+                case "5":
                     menuManteniment(connexio, sn);
                     break;
-                case 6:
+                case "6":
                     infoRegistre(connexio);
                     break;
-                case 0:
-                    salir=true;
+                case "7":
+                    infoDevolucio(connexio);
                     break;
+                case "0":
+                    salir = true;
+                    break;
+                default:
+                    System.err.println("\tÚnicament nombres del 0 al 7");
             }
+
         }
+
     }
     public static void menuClient(Connexio connexio, Scanner sn) {
         sn.nextLine(); //refresca scanner
         boolean salir = false;
-        int opcionMenu;
+        String opcionMenu;
         while(!salir){
             System.out.println("----Benvingut a la secció de Clients, què vol fer?----");
             System.out.println("1.Mostrar tots els clients");
@@ -64,13 +67,13 @@ public class main {
             System.out.println("0.Tornar al menú principal");
             System.out.print("Escriu una de les opcions --> ");
 
-            opcionMenu=sn.nextInt();
+            opcionMenu=sn.next();
             switch (opcionMenu){
-                case 1:
+                case "1":
                     System.out.print("\n-------------------MOSTRAR DADES-------------------\n");
                     Clients.mostrarTots(connexio);
                     break;
-                case 2:
+                case "2":
                     System.out.print("\n-------------------MOSTRAR PER DNI-------------------\n");
                     String dniC;
                     System.out.print("Introdueix el dni del client que vols buscar: ");
@@ -79,7 +82,7 @@ public class main {
                     System.out.println("Mostrar client pel dni...");
                     c.mostrarClient(connexio, c.getDni());
                     break;
-                case 3:
+                case "3":
                     System.out.print("\n-------------------INSERIR-------------------\n");
                     String dniInsertar,nom,tel,adreca,ciutat,pais,email,permis;
                     int edat, punts;
@@ -101,7 +104,7 @@ public class main {
                     Clients c1 = new Clients(nom, dniInsertar, edat, tel, adreca, ciutat, pais, email, permis, punts);
                     c1.inserirClient(connexio,c1.getDni(),c1.getNomCognom(), c1.getEdat(), c1.getTelefon(), c1.getAdreca(), c1.getCiutat(), c1.getPais(), c1.getEmail(), c1.getPermisConduccio(), c1.getPunts());
                     break;
-                case 4:
+                case "4":
                     System.out.print("\n-------------------ACTUALITZAR-------------------\n");
                     String [] columnas = new String[]{"nomCognom","dni","edat","telefon","adreca","ciutat","pais","email","permisConduccio","punts"};
                     Map<String,String> modificarColumnas = new TreeMap<>();
@@ -124,7 +127,7 @@ public class main {
                     c3.modificarCliente(connexio,modificarColumnas,c3.getDni());
                     System.out.println("Actualizar...");
                     break;
-                case 5:
+                case "5":
                     System.out.print("\n-------------------ESBORRAR-------------------\n");
                     String dniEsborrar;
                     System.out.print("Introdueix el dni del client que vols esborrar: ");
@@ -133,11 +136,11 @@ public class main {
                     Clients c2 = new Clients(dniEsborrar);
                     c2.eliminarClient(connexio,c2.getDni());
                     break;
-                case 0:
+                case "0":
                     salir=true;
                     break;
                 default:
-                    System.out.println("Únicament nombres del 1 al 6");
+                    System.err.println("\tÚnicament nombres del 0 al 5");
             }
         }
     }
@@ -567,6 +570,33 @@ public class main {
                 System.out.println("Dies de lloguer: "+resul.getString("dies"));
                 System.out.println("Preu per dia: "+resul.getString("preu"));
                 System.out.println("-----------------------------------------------\n");
+            }
+
+        }catch (Exception e){
+            System.err.println("Ha habido una exception!");
+            System.err.println(e.getMessage());
+        }
+    }
+
+    public static void infoDevolucio(Connexio connexio){
+        try{
+            String canviBoolean = "";
+            Statement sentencia = connexio.getConexion().createStatement();
+            ResultSet resul = sentencia.executeQuery("" +
+                    "SELECT l.matricula, llocDevolucio, depositPle, if(dataInici, \"Si\", \"No\") " +
+                    "FROM lloguer l " +
+                    "LEFT JOIN manteniment m ON l.matricula = m.matricula;");
+            while(resul.next()){
+                System.out.println("-------------------------------------");
+                System.out.println("Matrícula: "+resul.getString("matricula"));
+                System.out.println("Lloc devolució: "+resul.getString("llocDevolucio"));
+                if(resul.getString("depositPle").equalsIgnoreCase("1")){
+                    canviBoolean = "Sí";
+                }else{
+                    canviBoolean = "No";
+                }
+                System.out.println("Retorn de depòsit ple: "+canviBoolean);
+                System.out.println("Data inici de manteniment: "+resul.getString("if(dataInici, \"Si\", \"No\")"));
             }
 
         }catch (Exception e){

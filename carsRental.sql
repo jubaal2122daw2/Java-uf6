@@ -1,5 +1,5 @@
 INSERT INTO clients values("46465746W", "Judith Barrajon", 27, "607652294","calle Castelao num 24 ","Hospitalet","Espanya","prueba@prueba.com",'A2',12);
-/*delete from clients where dni = "46465746W";
+/*delete from clients where dni = "A AA";
 UPDATE clients set permisConduccio = 'A2' where nomCognom = "Judith Barrajon";*/
 UPDATE Clients SET nomCognom = "pepe" WHERE dni = "1234";
 select * from clients;
@@ -52,8 +52,18 @@ create table Lloguer(
 );
 INSERT INTO Lloguer values("46465746W", "1234ABC", 7, 10.50,"Estocolmo",1,"Con Franquicia");
 select matricula, c.dni, nomCognom, telefon, dies, preu from clients c, lloguer l where l.dni = c.dni; /*PARA LA CONSULTA DE SACAR LOS QUE ESTAN ALQUILADOS Y EL DNI.*/
+
+SELECT l.matricula, llocDevolucio, depositPle, dataInici, dataFi
+FROM lloguer l
+INNER JOIN manteniment m ON l.matricula = m.matricula;
+
+
+UPDATE lloguer SET matricula = "1234ABC" WHERE dni = "46465746w";
+
 select * from lloguer;
 select * from cotxes;
+select * from manteniment;
+select * from Mecanics;
 select dni from clients;
 create table Mecanics(
 	dniMecanic varchar(10) primary key,
@@ -82,6 +92,8 @@ create table Manteniment(
     PRIMARY KEY (dniMecanic,matricula)
 );
 INSERT INTO Manteniment values("000", "1234ABC", str_to_date('12-12-2021', '%d-%m-%Y'), str_to_date('1-01-2022', '%d-%m-%Y'));
+UPDATE MANTENIMENT SET dataInici = '2021-02-22' WHERE matricula = "1234ABC" and dniMecanic = "001";
+								   
 select * from mecanics;
 select * from manteniment;
 select * from lloguer;
