@@ -93,7 +93,11 @@ public class Lloguers {
             preparedStmt.setString(1, valor);
             preparedStmt.setString(2, valor);
             ResultSet resul = preparedStmt.executeQuery();
-            while(resul.next()){
+            boolean val = resul.next();
+            if(!val){
+                System.err.println("No existeix aquest dni o matricula");
+            }
+            while(val){
                 System.out.println("Dni: "+resul.getString("dni"));
                 System.out.println("Matrícula: "+resul.getString("matricula"));
                 System.out.println("Dies: "+resul.getString("dies"));
@@ -107,6 +111,7 @@ public class Lloguers {
                 System.out.println("Retorn de depòsit ple: "+canviBoolean);
                 System.out.println("Tipus Assegurança: "+resul.getString("tAsseguranca"));
                 System.out.println("-----------------------------------------------\n");
+                break;
             }
         }catch (Exception e){
             System.err.println("Ha habido una exception!");
@@ -168,7 +173,10 @@ public class Lloguers {
             }
             String lastElement = claves.get(claves.size() - 1);
             preparedStmt.setString(claves.indexOf(lastElement)+2, dni);
-            preparedStmt.executeUpdate();
+            int val =  preparedStmt.executeUpdate();
+            if(val == 0){
+                System.err.println("No existeix la matricula escollida en el lloguer");
+            }
         }catch (Exception e){
             System.err.println("Ha habido una exception!");
             System.err.println(e.getMessage());
@@ -179,7 +187,10 @@ public class Lloguers {
             String query = "DELETE FROM Lloguer WHERE matricula = ?;";
             PreparedStatement preparedStmt = connexio.getConexion().prepareStatement(query);
             preparedStmt.setString(1, matricula);
-            preparedStmt.executeUpdate();
+            int val =  preparedStmt.executeUpdate();
+            if(val == 0){
+                System.err.println("No existeix la matricula escollida en el lloguer");
+            }
         }catch (Exception e){
             System.err.println("Ha habido una exception!");
             System.err.println(e.getMessage());

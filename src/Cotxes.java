@@ -101,7 +101,11 @@ public class Cotxes {
             PreparedStatement preparedStmt = connexio.getConexion().prepareStatement(query);
             preparedStmt.setString(1, matricula);
             ResultSet resul = preparedStmt.executeQuery();
-            while(resul.next()){
+            boolean val = resul.next();
+            if(!val){
+                System.err.println("No existeix aquesta matrícula");
+            }
+            while(val){
                 System.out.println("Matrícula: "+resul.getString("matricula"));
                 System.out.println("Nº Bastidor: "+resul.getString("numBastidor"));
                 System.out.println("Marca: "+resul.getString("marca"));
@@ -112,6 +116,7 @@ public class Cotxes {
                 System.out.println("Maleter (l): "+resul.getString("maleter"));
                 System.out.println("Tipus de Combustible: "+resul.getString("tCombustible"));
                 System.out.println("-----------------------------------------------\n");
+                break;
             }
         }catch (Exception e){
             System.err.println("Ha habido una exception!");
@@ -157,7 +162,7 @@ public class Cotxes {
                     query = query + c + " = ? WHERE matricula = ?;";
                 }
             }
-            System.out.println(query);
+            //System.out.println(query);
             PreparedStatement preparedStmt = connexio.getConexion().prepareStatement(query);
             for(int i=0, j=0 ;i < claves.size() && j < valores.size(); i++,j++){
                 if(claves.get(i)=="numBastidor" || claves.get(i)=="places" || claves.get(i)=="numPortes"){
@@ -172,7 +177,10 @@ public class Cotxes {
             }
             String lastElement = claves.get(claves.size() - 1);
             preparedStmt.setString(claves.indexOf(lastElement)+2, matriculaCotxe);
-            preparedStmt.executeUpdate();
+            int val =  preparedStmt.executeUpdate();
+            if(val == 0){
+                System.err.println("No existeix la matrícula escollida");
+            }
         }catch (Exception e){
             System.err.println("Ha habido una exception!");
             System.err.println(e.getMessage());
@@ -183,7 +191,10 @@ public class Cotxes {
             String query = "DELETE FROM Cotxes WHERE matricula = ?;";
             PreparedStatement preparedStmt = connexio.getConexion().prepareStatement(query);
             preparedStmt.setString(1, matricula);
-            preparedStmt.executeUpdate();
+            int val =  preparedStmt.executeUpdate();
+            if(val == 0){
+                System.err.println("No existeix la matrícula escollida");
+            }
         }catch (Exception e){
             System.err.println("Ha habido una exception!");
             System.err.println(e.getMessage());

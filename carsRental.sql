@@ -53,9 +53,11 @@ create table Lloguer(
 INSERT INTO Lloguer values("46465746W", "1234ABC", 7, 10.50,"Estocolmo",1,"Con Franquicia");
 select matricula, c.dni, nomCognom, telefon, dies, preu from clients c, lloguer l where l.dni = c.dni; /*PARA LA CONSULTA DE SACAR LOS QUE ESTAN ALQUILADOS Y EL DNI.*/
 
-SELECT l.matricula, llocDevolucio, depositPle, dataInici, dataFi
+SELECT l.matricula, llocDevolucio, depositPle, if(dataInici, "Si", "No")
 FROM lloguer l
-INNER JOIN manteniment m ON l.matricula = m.matricula;
+LEFT JOIN manteniment m ON l.matricula = m.matricula; /*muestra los lloguers que han tenido mantenimiento*/
+
+delete from manteniment where matricula = "1234ABC";
 
 
 UPDATE lloguer SET matricula = "1234ABC" WHERE dni = "46465746w";

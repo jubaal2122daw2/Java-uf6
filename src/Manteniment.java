@@ -73,12 +73,17 @@ public class Manteniment {
             PreparedStatement preparedStmt = connexio.getConexion().prepareStatement(query);
             preparedStmt.setString(1, valor);
             ResultSet resul = preparedStmt.executeQuery();
-            while(resul.next()){
+            boolean val = resul.next();
+            if(!val){
+                System.err.println("No existeix aquest dni");
+            }
+            while(val){
                 System.out.println("Dni Mecànic: "+resul.getString("dniMecanic"));
                 System.out.println("Matrícula: "+resul.getString("matricula"));
                 System.out.println("Data Inici Manteniment: "+resul.getString("dataInici"));
                 System.out.println("Data Fi Manteniment: "+resul.getString("dataFi"));
                 System.out.println("-----------------------------------------------\n");
+                break;
             }
         }catch (Exception e){
             System.err.println("Ha habido una exception!");
@@ -135,7 +140,10 @@ public class Manteniment {
             String lastElement = claves.get(claves.size() - 1);
             preparedStmt.setString(claves.indexOf(lastElement)+2, matricula);
             preparedStmt.setString(claves.indexOf(lastElement)+3, dni);
-            preparedStmt.executeUpdate();
+            int val =  preparedStmt.executeUpdate();
+            if(val == 0){
+                System.err.println("No existeix la matricula o el dni escollida en el manteniment");
+            }
         }catch (Exception e){
             System.err.println("Ha habido una exception!");
             System.err.println(e.getMessage());
@@ -147,7 +155,10 @@ public class Manteniment {
             PreparedStatement preparedStmt = connexio.getConexion().prepareStatement(query);
             preparedStmt.setString(1, matricula);
             preparedStmt.setString(2, dni);
-            preparedStmt.executeUpdate();
+            int val =  preparedStmt.executeUpdate();
+            if(val == 0){
+                System.err.println("No existeix la matricula o el dni escollida en el manteniment");
+            }
         }catch (Exception e){
             System.err.println("Ha habido una exception!");
             System.err.println(e.getMessage());

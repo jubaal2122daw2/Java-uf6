@@ -135,7 +135,11 @@ public class Mecanics {
             PreparedStatement preparedStmt = connexio.getConexion().prepareStatement(query);
             preparedStmt.setString(1, dniMecanic);
             ResultSet resul = preparedStmt.executeQuery();
-            while(resul.next()){
+            boolean val = resul.next();
+            if(!val){
+                System.err.println("No existeix aquest dni");
+            }
+            while(val){
                 System.out.println("Dni: "+resul.getString("dniMecanic"));
                 System.out.println("Nom i cognom: "+resul.getString("nomCognomM"));
                 System.out.println("Edat: "+resul.getString("edatM"));
@@ -151,6 +155,7 @@ public class Mecanics {
                 System.out.println("Titulació: "+resul.getString("titulacio"));
                 System.out.println("Anys en l'empresa: "+resul.getString("anysEmp"));
                 System.out.println("-----------------------------------------------\n");
+                break;
             }
         }catch (Exception e){
             System.err.println("Ha habido una exception!");
@@ -215,7 +220,10 @@ public class Mecanics {
             }
             String lastElement = claves.get(claves.size() - 1);
             preparedStmt.setString(claves.indexOf(lastElement)+2, dniMecanic);
-            preparedStmt.executeUpdate();
+            int val =  preparedStmt.executeUpdate();
+            if(val == 0){
+                System.err.println("No existeix el dni escollit");
+            }
         }catch (Exception e){
             System.err.println("Ha habido una exception!");
             System.err.println(e.getMessage());
@@ -226,7 +234,10 @@ public class Mecanics {
             String query = "DELETE FROM Mecanics WHERE dniMecanic = ?;";
             PreparedStatement preparedStmt = connexio.getConexion().prepareStatement(query);
             preparedStmt.setString(1, dniMecanic);
-            preparedStmt.executeUpdate();
+            int val =  preparedStmt.executeUpdate();
+            if(val == 0){
+                System.err.println("No existeix el dni escollit");
+            }
         }catch (Exception e){
             System.err.println("Ha habido una exception!");
             System.err.println(e.getMessage());

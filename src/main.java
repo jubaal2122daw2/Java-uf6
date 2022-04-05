@@ -79,7 +79,6 @@ public class main {
                     System.out.print("Introdueix el dni del client que vols buscar: ");
                     dniC=sn.next();
                     Clients c = new Clients(dniC);
-                    System.out.println("Mostrar client pel dni...");
                     c.mostrarClient(connexio, c.getDni());
                     break;
                 case "3":

@@ -106,7 +106,11 @@ public class Clients {
             PreparedStatement preparedStmt = connexio.getConexion().prepareStatement(query);
             preparedStmt.setString(1, dni);
             ResultSet resul = preparedStmt.executeQuery();
-            while(resul.next()){
+            boolean val = resul.next();
+            if(!val){
+                System.err.println("No existeix aquest dni");
+            }
+            while(val){
                 System.out.println("Nom i cognom: "+resul.getString("nomCognom"));
                 System.out.println("DNI: "+resul.getString("dni"));
                 System.out.println("Edat: "+resul.getString("edat"));
@@ -118,6 +122,7 @@ public class Clients {
                 System.out.println("Permís conducció: "+resul.getString("permisConduccio"));
                 System.out.println("Punts actuals: "+resul.getString("punts"));
                 System.out.println("-----------------------------------------------\n");
+                break;
             }
 
 
@@ -178,7 +183,10 @@ public class Clients {
             }
             String lastElement = claves.get(claves.size() - 1);
             preparedStmt.setString(claves.indexOf(lastElement)+2, dniCliente);
-            preparedStmt.executeUpdate();
+            int val =  preparedStmt.executeUpdate();
+            if(val == 0){
+                System.err.println("No existeix el client escollit");
+            }
         }catch (Exception e){
             System.err.println("Ha habido una exception!");
             System.err.println(e.getMessage());
@@ -189,7 +197,10 @@ public class Clients {
             String query = "DELETE FROM Clients WHERE dni = ?;";
             PreparedStatement preparedStmt = connexio.getConexion().prepareStatement(query);
             preparedStmt.setString(1, dni);
-            preparedStmt.executeUpdate();
+            int val =  preparedStmt.executeUpdate();
+            if(val == 0){
+                System.err.println("No existeix el client escollit");
+            }
         }catch (Exception e){
             System.err.println("Ha habido una exception!");
             System.err.println(e.getMessage());
