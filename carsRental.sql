@@ -12,40 +12,40 @@ CREATE DATABASE carsRental;
 use carsRental;
 
 create table Clients(
-	dni varchar(10) primary key,
-    nomCognom varchar(30),
-    edat integer,
-	telefon varchar(11),
-    adreca varchar(100),
-    ciutat varchar(30),
-    pais varchar(30),
-    email varchar(30),
-    permisConduccio varchar(5),
-    punts integer
+	dni varchar(10) primary key, #dni del client
+    nomCognom varchar(30), #cognom del client
+    edat integer, #edat del client
+	telefon varchar(11), #telefon del client
+    adreca varchar(100), #adreça del client
+    ciutat varchar(30), #ciutat del client
+    pais varchar(30), #pais del client
+    email varchar(30), #email del client
+    permisConduccio varchar(5), #permis de conducció del client
+    punts integer #punts dels que disposa el client
 );
 
 ALTER TABLE Clients MODIFY permisConduccio varchar(5) not null;
 
 create table Cotxes(
-	matricula varchar(10) primary key,
-    numBastidor integer,
-    marca varchar(30),
-    model varchar(30),
-    color varchar(30),
-    places integer,
-    numPortes integer,
-    maleter double,
-    tCombustible varchar(30)
+	matricula varchar(10) primary key, #matricula del cotxe
+    numBastidor integer, #numero de bastidor del cotxe
+    marca varchar(30), #marca del cotxe
+    model varchar(30), #model del cotxe
+    color varchar(30), #color del cotxe
+    places integer, #places del cotxe
+    numPortes integer, #nombre de portes del cotxe
+    maleter double, #capacitat del maleter del cotxe en litres
+    tCombustible varchar(30) #tipus de combustible del cotxe
 );
 
 create table Lloguer(
-	dni varchar(10),
-    matricula varchar(10),
-	dies integer,
-    preu double,
-    llocDevolucio varchar(100),
-    depositPle boolean, 
-    tAsseguranca varchar(30),
+	dni varchar(10), #dni del client
+    matricula varchar(10), #matricula del cotxe
+	dies integer, #dies que estarà de lloguer
+    preu double, #preu per dia del lloguer
+    llocDevolucio varchar(100), #lloc de devolució del cotxe
+    depositPle boolean, #si es retorna amb el deposit ple
+    tAsseguranca varchar(30), #tipus d'assegurança del lloguer
     FOREIGN KEY (dni) REFERENCES Clients(dni) on update cascade on delete cascade,
     FOREIGN KEY (matricula) REFERENCES Cotxes(matricula) on update cascade on delete cascade,
     PRIMARY KEY (dni,matricula)
@@ -67,28 +67,29 @@ select * from cotxes;
 select * from manteniment;
 select * from Mecanics;
 select dni from clients;
+
 create table Mecanics(
-	dniMecanic varchar(10) primary key,
-    nomCognomM varchar(30),
-    edatM integer,
-	telM varchar(11),
-    adrecaM varchar(100),
-    ciutatM varchar(30),
-    paisM varchar(30),
-    emailM varchar(30),
-    permisConduccioM varchar(5),
-    puntsM integer,
-    salari double,
-    seguretatSocial integer,
-    titulacio varchar(30),
-    anysEmp integer
+	dniMecanic varchar(10) primary key, #dni del mecanic
+    nomCognomM varchar(30), #cognom del mecanic
+    edatM integer, #edat del mecanic
+	telM varchar(11), #telefon del mecanic
+    adrecaM varchar(100),#adreça del mecanic
+    ciutatM varchar(30),#ciutat del mecanic
+    paisM varchar(30),#pais del mecanic
+    emailM varchar(30),#email del mecanic
+    permisConduccioM varchar(5),  #permis de conducció del mecanic
+    puntsM integer,#punts dels que disposa el mecanic
+    salari double, #salari del mecanic
+    seguretatSocial integer,#numero de la seguretat social del mecanic
+    titulacio varchar(30),#la titulació del mecanic
+    anysEmp integer #anys en l'empresa del mecanic
 );
 
 create table Manteniment(
-	dniMecanic varchar(10),
-    matricula varchar(10),
-    dataInici date,
-    dataFi date,
+	dniMecanic varchar(10), #dni del mecanic
+    matricula varchar(10), #matricula del mecanic
+    dataInici date,#data inici del manteniment
+    dataFi date, #data fi del manteniment
     FOREIGN KEY (dniMecanic) REFERENCES Mecanics(dniMecanic)  on update cascade on delete cascade,
     FOREIGN KEY (matricula) REFERENCES Cotxes(matricula)  on update cascade on delete cascade,
     PRIMARY KEY (dniMecanic,matricula)
